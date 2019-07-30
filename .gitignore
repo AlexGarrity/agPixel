@@ -47,3 +47,12 @@ CTestTestfile.cmake
 
 # Build directory
 build/
+
+
+# Let's get rid of CLion stuff too.  VS coming soon (TM)
+
+# I just straignt up don't want the IDE stuff
+.idea/
+
+# CMake
+cmake-build-*/

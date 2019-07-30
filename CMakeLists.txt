@@ -6,7 +6,7 @@
 
 cmake_minimum_required(VERSION 3.10)
 
-project(libPixel VERSION 1.0 DESCRIPTION "Simple library for handling images")
+project(libPixel VERSION 1.0 DESCRIPTION "Simple library for handling pixels")
 include(GNUInstallDirs)
 
 add_library(libPixel SHARED
@@ -24,14 +24,7 @@ target_include_directories(
     libPixel PRIVATE src
 )
 
-
-
 install(TARGETS libPixel
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-install(
-    FILES ${CMAKE_BINARY_DIR}/libPixel.pc
-    DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig
 )

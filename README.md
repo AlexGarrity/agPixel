@@ -18,7 +18,7 @@ And that should automagically install it.
 
 ## Coming Soon
 *I make no promises, you can see the commit history in my other projects*
-- Operator overloads
 - Pixels using doubles instead of floats
 - HSL representations of pixels
+- More operator overloads
 - Built-in pixel array type for representing images
