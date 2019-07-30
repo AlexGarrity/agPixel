@@ -5,3 +5,4 @@
 
 #include "PixelFloat.hpp"
 #include "PixelInt.hpp"
+#include "PixelDouble.hpp"
