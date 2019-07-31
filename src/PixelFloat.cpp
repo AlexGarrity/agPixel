@@ -104,70 +104,70 @@ void fRGBA::operator/=(float value) {
 
 // Static operator overloads
 
-inline fRGB operator+(const fRGB& a, const fRGB& b) {
+PIXEL_API inline fRGB operator+(const fRGB& a, const fRGB& b) {
   return {a.R() + b.R(), a.G() + b.G(), a.B() + b.B()};
 }
 
-inline fRGB operator-(const fRGB& a, const fRGB& b) {
+PIXEL_API inline fRGB operator-(const fRGB& a, const fRGB& b) {
   return {a.R() - b.R(), a.G() - b.G(), a.B() - b.B()};
 }
 
-inline fRGB operator*(const fRGB& a, const fRGB& b) {
+PIXEL_API inline fRGB operator*(const fRGB& a, const fRGB& b) {
   return {a.R() * b.R(), a.G() * b.G(), a.B() * b.B()};
 }
 
-inline fRGB operator/(const fRGB& a, const fRGB& b) {
+PIXEL_API inline fRGB operator/(const fRGB& a, const fRGB& b) {
   return {a.R() / b.R(), a.G() / b.G(), a.B() / b.B()};
 }
 
-inline fRGB operator+(const fRGB& rgb, const float value) {
+PIXEL_API inline fRGB operator+(const fRGB& rgb, const float value) {
   return {rgb.R() + value, rgb.G() + value, rgb.B() + value};
 }
 
-inline fRGB operator-(const fRGB& rgb, const float value) {
+PIXEL_API inline fRGB operator-(const fRGB& rgb, const float value) {
   return {rgb.R() - value, rgb.G() - value, rgb.B() - value};
 }
 
-inline fRGB operator*(const fRGB& rgb, const float value) {
+PIXEL_API inline fRGB operator*(const fRGB& rgb, const float value) {
   return {rgb.R() * value, rgb.G() * value, rgb.B() * value};
 }
 
-inline fRGB operator/(const fRGB& rgb, const float value) {
+PIXEL_API inline fRGB operator/(const fRGB& rgb, const float value) {
   return {rgb.R() / value, rgb.G() / value, rgb.B() / value};
 }
 
-inline fRGBA operator+(const fRGBA& a, const fRGBA& b) {
+PIXEL_API inline fRGBA operator+(const fRGBA& a, const fRGBA& b) {
   return {a.R() + b.R(), a.G() + b.G(), a.B() + b.B(), a.A() + b.A()};
 }
 
-inline fRGBA operator-(const fRGBA& a, const fRGBA& b) {
+PIXEL_API inline fRGBA operator-(const fRGBA& a, const fRGBA& b) {
   return {a.R() - b.R(), a.G() - b.G(), a.B() - b.B(), a.A() - b.A()};
 }
 
-inline fRGBA operator*(const fRGBA& a, const fRGBA& b) {
+PIXEL_API inline fRGBA operator*(const fRGBA& a, const fRGBA& b) {
   return {a.R() * b.R(), a.G() * b.G(), a.B() * b.B(), a.A() * b.A()};
 }
 
-inline fRGBA operator/(const fRGBA& a, const fRGBA& b) {
+PIXEL_API inline fRGBA operator/(const fRGBA& a, const fRGBA& b) {
   return {a.R() / b.R(), a.G() / b.G(), a.B() / b.B(), a.A() / b.A()};
 }
 
-inline fRGBA operator+(const fRGBA& rgba, const float value) {
+PIXEL_API inline fRGBA operator+(const fRGBA& rgba, const float value) {
   return {rgba.R() + value, rgba.G() + value, rgba.B() + value,
           rgba.A() + value};
 }
 
-inline fRGBA operator-(const fRGBA& rgba, const float value) {
+PIXEL_API inline fRGBA operator-(const fRGBA& rgba, const float value) {
   return {rgba.R() - value, rgba.G() - value, rgba.B() - value,
           rgba.A() - value};
 }
 
-inline fRGBA operator*(const fRGBA& rgba, const float value) {
+PIXEL_API inline fRGBA operator*(const fRGBA& rgba, const float value) {
   return {rgba.R() * value, rgba.G() * value, rgba.B() * value,
           rgba.A() * value};
 }
 
-inline fRGBA operator/(const fRGBA& rgba, const float value) {
+PIXEL_API inline fRGBA operator/(const fRGBA& rgba, const float value) {
   return {rgba.R() / value, rgba.G() / value, rgba.B() / value,
           rgba.A() / value};
 }

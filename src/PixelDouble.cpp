@@ -104,70 +104,70 @@ namespace Pixel {
 
 // Static operator overloads
 
-    inline dRGB operator+(const dRGB& a, const dRGB& b) {
+    PIXEL_API inline dRGB operator+(const dRGB& a, const dRGB& b) {
         return {a.R() + b.R(), a.G() + b.G(), a.B() + b.B()};
     }
 
-    inline dRGB operator-(const dRGB& a, const dRGB& b) {
+    PIXEL_API inline dRGB operator-(const dRGB& a, const dRGB& b) {
         return {a.R() - b.R(), a.G() - b.G(), a.B() - b.B()};
     }
 
-    inline dRGB operator*(const dRGB& a, const dRGB& b) {
+    PIXEL_API inline dRGB operator*(const dRGB& a, const dRGB& b) {
         return {a.R() * b.R(), a.G() * b.G(), a.B() * b.B()};
     }
 
-    inline dRGB operator/(const dRGB& a, const dRGB& b) {
+    PIXEL_API inline dRGB operator/(const dRGB& a, const dRGB& b) {
         return {a.R() / b.R(), a.G() / b.G(), a.B() / b.B()};
     }
 
-    inline dRGB operator+(const dRGB& rgb, const double value) {
+    PIXEL_API inline dRGB operator+(const dRGB& rgb, const double value) {
         return {rgb.R() + value, rgb.G() + value, rgb.B() + value};
     }
 
-    inline dRGB operator-(const dRGB& rgb, const double value) {
+    PIXEL_API inline dRGB operator-(const dRGB& rgb, const double value) {
         return {rgb.R() - value, rgb.G() - value, rgb.B() - value};
     }
 
-    inline dRGB operator*(const dRGB& rgb, const double value) {
+    PIXEL_API inline dRGB operator*(const dRGB& rgb, const double value) {
         return {rgb.R() * value, rgb.G() * value, rgb.B() * value};
     }
 
-    inline dRGB operator/(const dRGB& rgb, const double value) {
+    PIXEL_API inline dRGB operator/(const dRGB& rgb, const double value) {
         return {rgb.R() / value, rgb.G() / value, rgb.B() / value};
     }
 
-    inline dRGBA operator+(const dRGBA& a, const dRGBA& b) {
+    PIXEL_API inline dRGBA operator+(const dRGBA& a, const dRGBA& b) {
         return {a.R() + b.R(), a.G() + b.G(), a.B() + b.B(), a.A() + b.A()};
     }
 
-    inline dRGBA operator-(const dRGBA& a, const dRGBA& b) {
+    PIXEL_API inline dRGBA operator-(const dRGBA& a, const dRGBA& b) {
         return {a.R() - b.R(), a.G() - b.G(), a.B() - b.B(), a.A() - b.A()};
     }
 
-    inline dRGBA operator*(const dRGBA& a, const dRGBA& b) {
+    PIXEL_API inline dRGBA operator*(const dRGBA& a, const dRGBA& b) {
         return {a.R() * b.R(), a.G() * b.G(), a.B() * b.B(), a.A() * b.A()};
     }
 
-    inline dRGBA operator/(const dRGBA& a, const dRGBA& b) {
+    PIXEL_API inline dRGBA operator/(const dRGBA& a, const dRGBA& b) {
         return {a.R() / b.R(), a.G() / b.G(), a.B() / b.B(), a.A() / b.A()};
     }
 
-    inline dRGBA operator+(const dRGBA& rgba, const double value) {
+    PIXEL_API inline dRGBA operator+(const dRGBA& rgba, const double value) {
         return {rgba.R() + value, rgba.G() + value, rgba.B() + value,
                 rgba.A() + value};
     }
 
-    inline dRGBA operator-(const dRGBA& rgba, const double value) {
+    PIXEL_API inline dRGBA operator-(const dRGBA& rgba, const double value) {
         return {rgba.R() - value, rgba.G() - value, rgba.B() - value,
                 rgba.A() - value};
     }
 
-    inline dRGBA operator*(const dRGBA& rgba, const double value) {
+    PIXEL_API inline dRGBA operator*(const dRGBA& rgba, const double value) {
         return {rgba.R() * value, rgba.G() * value, rgba.B() * value,
                 rgba.A() * value};
     }
 
-    inline dRGBA operator/(const dRGBA& rgba, const double value) {
+    PIXEL_API inline dRGBA operator/(const dRGBA& rgba, const double value) {
         return {rgba.R() / value, rgba.G() / value, rgba.B() / value,
                 rgba.A() / value};
     }

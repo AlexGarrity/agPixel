@@ -1,13 +1,15 @@
 #pragma once
 
-// Traditional integer representations of piexls
+#include "PixelCore.hpp"
+
+// Traditional integer representations of pixels
 // Designed to be highly efficient and use as little space as possible
 // Also very cheap to work with
 
 namespace Pixel {
 
 // RGB is the simplest way to represent a pixel, using only red, green, and blue
-class RGB {
+class PIXEL_API RGB {
  protected:
   char _r;
   char _g;
@@ -37,7 +39,7 @@ class RGB {
 };
 
 // RGBA is an extension of RGB, adding support for alpha
-class RGBA : public RGB {
+class PIXEL_API RGBA : public RGB {
  protected:
   char _a;
 

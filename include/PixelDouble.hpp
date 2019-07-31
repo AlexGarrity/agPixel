@@ -1,14 +1,16 @@
 #pragma once
 
-// double represetations of pixels
+// Double representations of pixels
 // Even more CPU intensive to use, but also even more accurate
 // Suited for applications such as really accurate ray tracing
+
+#include "PixelCore.hpp"
 
 namespace Pixel {
 
 // dRGB is the simplest way to represent a pixel, using only red, green, and
 // blue
-    class dRGB {
+    class PIXEL_API dRGB {
     protected:
         double _r;
         double _g;
@@ -44,7 +46,7 @@ namespace Pixel {
     };
 
 // dRGBA is an extension of dRGB, adding support for alpha
-    class dRGBA : public dRGB {
+    class PIXEL_API dRGBA : public dRGB {
     protected:
         double _a;
 

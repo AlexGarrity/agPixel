@@ -1,6 +1,8 @@
 #pragma once
 
-// Floating point represetations of pixels
+#include "PixelCore.hpp"
+
+// Floating point representations of pixels
 // More CPU intensive to use, but also more accurate
 // Suited for applications such as ray tracing
 
@@ -8,7 +10,7 @@ namespace Pixel {
 
 // fRGB is the simplest way to represent a pixel, using only red, green, and
 // blue
-class fRGB {
+class PIXEL_API fRGB {
  protected:
   float _r;
   float _g;
@@ -44,7 +46,7 @@ class fRGB {
 };
 
 // fRGBA is an extension of fRGB, adding support for alpha
-class fRGBA : public fRGB {
+class PIXEL_API fRGBA : public fRGB {
  protected:
   float _a;
 
