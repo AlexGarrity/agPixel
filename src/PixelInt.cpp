@@ -1,35 +1,56 @@
 #include "PixelInt.hpp"
+#include "PixelMath.hpp"
 
 namespace Pixel {
 
 // RGB functions
 
+RGB::RGB(const char *rgb) : _r{rgb[0]}, _g{rgb[1]}, _b{rgb[2]} {delete[] rgb;}
+
 RGB::RGB(const char r, const char g, const char b) : _r{r}, _g{g}, _b{b} {}
 
 RGB::RGB() : RGB(0, 0, 0) {}
 
-char RGB::R() const { return _r; }
+char RGB::R() const {
+  return _r;
+}
 
-char& RGB::R() { return _r; }
+char& RGB::R() {
+  return _r;
+}
 
-char RGB::G() const { return _g; }
+char RGB::G() const {
+  return _g;
+}
 
-char& RGB::G() { return _g; }
+char& RGB::G() {
+  return _g;
+}
 
-char RGB::B() const { return _b; }
+char RGB::B() const {
+  return _b;
+}
 
-char& RGB::B() { return _b; }
+char& RGB::B() {
+  return _b;
+}
 
 // RGBA functions
+
+RGBA::RGBA(const char *rgba) : RGB(rgba[0], rgba[1], rgba[2]), _a{rgba[3]} {delete[] rgba;}
 
 RGBA::RGBA(const char r, const char g, const char b, const char a)
     : RGB(r, g, b), _a{a} {}
 
 RGBA::RGBA() : RGBA(0, 0, 0, 0) {}
 
-char RGBA::A() const { return _a; }
+char RGBA::A() const {
+  return _a;
+}
 
-char& RGBA::A() { return _a; }
+char& RGBA::A() {
+  return _a;
+}
 
 // Operator overloads
 
@@ -102,71 +123,91 @@ void RGBA::operator-=(const RGBA& other) {
 // Static operator overloads
 
 PIXEL_API inline RGB operator+(const RGB& a, const RGB& b) {
-  return RGB(a.R() + b.R(), a.G() + b.G(), a.B() + b.B());
+    auto sum = Pixel::Add(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), 0, 0);
+  return {sum[0], sum[1], sum[2]};
 }
 
 PIXEL_API inline RGB operator-(const RGB& a, const RGB& b) {
-  return RGB(a.R() - b.R(), a.G() - b.G(), a.B() - b.B());
+  return {static_cast<char>(a.R() - b.R()), static_cast<char>(a.G() - b.G()),
+          static_cast<char>(a.B() - b.B())};
 }
 
 PIXEL_API inline RGB operator*(const RGB& a, const RGB& b) {
-  return RGB(a.R() * b.R(), a.G() * b.G(), a.B() * b.B());
+  return {static_cast<char>(a.R() * b.R()), static_cast<char>(a.G() * b.G()),
+          static_cast<char>(a.B() * b.B())};
 }
 
 PIXEL_API inline RGB operator/(const RGB& a, const RGB& b) {
-  return RGB(a.R() / b.R(), a.G() / b.G(), a.B() / b.B());
+  return {static_cast<char>(a.R() / b.R()), static_cast<char>(a.G() / b.G()),
+          static_cast<char>(a.B() / b.B())};
 }
 
 PIXEL_API inline RGB operator+(const RGB& rgb, const char value) {
-  return RGB(rgb.R() + value, rgb.G() + value, rgb.B() + value);
+  return {static_cast<char>(rgb.R() + value),
+          static_cast<char>(rgb.G() + value),
+          static_cast<char>(rgb.B() + value)};
 }
 
 PIXEL_API inline RGB operator-(const RGB& rgb, const char value) {
-  return RGB(rgb.R() - value, rgb.G() - value, rgb.B() - value);
+  return {static_cast<char>(rgb.R() - value),
+          static_cast<char>(rgb.G() - value),
+          static_cast<char>(rgb.B() - value)};
 }
 
 PIXEL_API inline RGB operator*(const RGB& rgb, const char value) {
-  return RGB(rgb.R() * value, rgb.G() * value, rgb.B() * value);
+  return {static_cast<char>(rgb.R() * value),
+          static_cast<char>(rgb.G() * value),
+          static_cast<char>(rgb.B() * value)};
 }
 
 PIXEL_API inline RGB operator/(const RGB& rgb, const char value) {
-  return RGB(rgb.R() / value, rgb.G() / value, rgb.B() / value);
+  return {static_cast<char>(rgb.R() / value),
+          static_cast<char>(rgb.G() / value),
+          static_cast<char>(rgb.B() / value)};
 }
 
 PIXEL_API inline RGBA operator+(const RGBA& a, const RGBA& b) {
-  return RGBA(a.R() + b.R(), a.G() + b.G(), a.B() + b.B(), a.A() + b.A());
+  return {static_cast<char>(a.R() + b.R()), static_cast<char>(a.G() + b.G()),
+          static_cast<char>(a.B() + b.B()), static_cast<char>(a.A() + b.A())};
 }
 
 PIXEL_API inline RGBA operator-(const RGBA& a, const RGBA& b) {
-  return RGBA(a.R() - b.R(), a.G() - b.G(), a.B() - b.B(), a.A() - b.A());
+  return {static_cast<char>(a.R() - b.R()), static_cast<char>(a.G() - b.G()),
+          static_cast<char>(a.B() - b.B()), static_cast<char>(a.A() - b.A())};
 }
 
 PIXEL_API inline RGBA operator*(const RGBA& a, const RGBA& b) {
-  return RGBA(a.R() * b.R(), a.G() * b.G(), a.B() * b.B(), a.A() * b.A());
+  return {static_cast<char>(a.R() * b.R()), static_cast<char>(a.G() * b.G()),
+          static_cast<char>(a.B() * b.B()), static_cast<char>(a.A() * b.A())};
 }
 
 PIXEL_API inline RGBA operator/(const RGBA& a, const RGBA& b) {
-  return RGBA(a.R() / b.R(), a.G() / b.G(), a.B() / b.B(), a.A() / b.A());
+  return {static_cast<char>(a.R() / b.R()), static_cast<char>(a.G() / b.G()),
+          static_cast<char>(a.B() / b.B()), static_cast<char>(a.A() / b.A())};
 }
 
 PIXEL_API inline RGBA operator+(const RGBA& rgba, const char value) {
-  return RGBA(rgba.R() + value, rgba.G() + value, rgba.B() + value,
-              rgba.A() + value);
+  return {
+      static_cast<char>(rgba.R() + value), static_cast<char>(rgba.G() + value),
+      static_cast<char>(rgba.B() + value), static_cast<char>(rgba.A() + value)};
 }
 
 PIXEL_API inline RGBA operator-(const RGBA& rgba, const char value) {
-  return RGBA(rgba.R() - value, rgba.G() - value, rgba.B() - value,
-              rgba.A() - value);
+  return {
+      static_cast<char>(rgba.R() - value), static_cast<char>(rgba.G() - value),
+      static_cast<char>(rgba.B() - value), static_cast<char>(rgba.A() - value)};
 }
 
 PIXEL_API inline RGBA operator*(const RGBA& rgba, const char value) {
-  return RGBA(rgba.R() * value, rgba.G() * value, rgba.B() * value,
-              rgba.A() * value);
+  return {
+      static_cast<char>(rgba.R() * value), static_cast<char>(rgba.G() * value),
+      static_cast<char>(rgba.B() * value), static_cast<char>(rgba.A() * value)};
 }
 
 PIXEL_API inline RGBA operator/(const RGBA& rgba, const char value) {
-  return RGBA(rgba.R() / value, rgba.G() / value, rgba.B() / value,
-              rgba.A() / value);
+  return {
+      static_cast<char>(rgba.R() / value), static_cast<char>(rgba.G() / value),
+      static_cast<char>(rgba.B() / value), static_cast<char>(rgba.A() / value)};
 }
 
 }  // namespace Pixel

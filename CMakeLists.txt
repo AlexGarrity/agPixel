@@ -9,18 +9,21 @@ cmake_minimum_required(VERSION 3.12)
 project(Pixel VERSION 1.0 DESCRIPTION "Simple library for handling pixels")
 include(GNUInstallDirs)
 
-set(BUILD_SHARED_LIBS true CACHE BOOL "Build the library")
-set(ENABLE_EXTENSIONS true CACHE BOOL "Enable the use of SIMD extensions")
+set(BUILD_PIXEL TRUE CACHE BOOL "Build the library")
+set(BUILD_SHARED_LIBS TRUE CACHE BOOL "Build the library shared (true) or static (false)")
+set(ENABLE_EXTENSIONS ON CACHE BOOL "Enable the use of SIMD extensions")
 
-if(${BUILD_SHARED_LIBS})
+if(${BUILD_PIXEL})
 add_compile_definitions("BUILD_LIB")
 endif()
 
-if(${ENABLE_EXTENSIONS})
-add_compile_definitions("ENABLE_EXTENSIONS")
+if(${BUILD_SHARED_LIBS})
+set (LIBRARY_KEYWORD "SHARED")
+else()
+set (LIBRARY_KEYWORD "STATIC")
 endif()
 
-add_library(Pixel SHARED
+add_library(Pixel ${LIBRARY_KEYWORD}
     src/PixelInt.cpp
     src/PixelFloat.cpp
     src/PixelDouble.cpp
@@ -31,6 +34,11 @@ set_target_properties(Pixel PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
 )
+
+if(${ENABLE_EXTENSIONS})
+add_compile_definitions("ENABLE_EXTENSIONS")
+set_target_properties(Pixel PROPERTIES COMPILE_FLAGS "-mavx2 -msse4")
+endif()
 
 target_include_directories(
     Pixel PRIVATE include
