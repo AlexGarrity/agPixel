@@ -143,9 +143,8 @@ PIXEL_API inline RGB operator/(const RGB& a, const RGB& b) {
 }
 
 PIXEL_API inline RGB operator+(const RGB& rgb, const char value) {
-  return {static_cast<char>(rgb.R() + value),
-          static_cast<char>(rgb.G() + value),
-          static_cast<char>(rgb.B() + value)};
+  auto sum = Pixel::Add(rgb.R(), value, rgb.G(), value, rgb.B(), value, 0, 0);
+  return {sum[0], sum[1], sum[2]};
 }
 
 PIXEL_API inline RGB operator-(const RGB& rgb, const char value) {
@@ -167,8 +166,8 @@ PIXEL_API inline RGB operator/(const RGB& rgb, const char value) {
 }
 
 PIXEL_API inline RGBA operator+(const RGBA& a, const RGBA& b) {
-  return {static_cast<char>(a.R() + b.R()), static_cast<char>(a.G() + b.G()),
-          static_cast<char>(a.B() + b.B()), static_cast<char>(a.A() + b.A())};
+  auto sum = Pixel::Add(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), a.A(), b.A());
+  return {sum[0], sum[1], sum[2], sum[3]};
 }
 
 PIXEL_API inline RGBA operator-(const RGBA& a, const RGBA& b) {
@@ -187,9 +186,8 @@ PIXEL_API inline RGBA operator/(const RGBA& a, const RGBA& b) {
 }
 
 PIXEL_API inline RGBA operator+(const RGBA& rgba, const char value) {
-  return {
-      static_cast<char>(rgba.R() + value), static_cast<char>(rgba.G() + value),
-      static_cast<char>(rgba.B() + value), static_cast<char>(rgba.A() + value)};
+  auto sum = Pixel::Add(rgba.R(), value, rgba.G(), value, rgba.B(), value, rgba.A(), value);
+  return {sum[0], sum[1], sum[2], sum[3]};
 }
 
 PIXEL_API inline RGBA operator-(const RGBA& rgba, const char value) {

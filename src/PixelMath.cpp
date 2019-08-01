@@ -35,7 +35,6 @@ double* UnpackDouble(__m256d doubles) {
   return out;
 }
 
-
 char *Add(char a1, char a2, char b1, char b2, char c1, char c2, char d1, char d2) {
   // Pack the chars into an __m256i...
   __m256i a{a1, b1, c1, d1};
@@ -57,6 +56,12 @@ double *Add(double a1, double a2, double b1, double b2, double c1, double c2, do
   __m256d b{a2, b2, c2, d2};
   auto result = _mm256_add_pd(a, b);
   return UnpackDouble(result);
+}
+
+char *Mul(char a1, char a2, char b1, char b2, char c1, char c2, char d1, char d2) {
+  __m256i a{a1, b1, c1, d1};
+  __m256i b{a1, b1, c1, d1};
+  //auto result = _mm256_mul_epi8(a, b);
 }
 
 #else
