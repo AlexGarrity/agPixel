@@ -53,6 +53,7 @@ build/
 
 # I just straignt up don't want the IDE stuff
 .idea/
+.vscode/
 
 # CMake
 cmake-build-*/
