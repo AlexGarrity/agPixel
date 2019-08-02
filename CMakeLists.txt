@@ -6,7 +6,7 @@
 
 cmake_minimum_required(VERSION 3.12)
 
-project(Pixel VERSION 1.0 DESCRIPTION "Simple library for handling pixels")
+project(Pixel VERSION 1.1 DESCRIPTION "Simple library for handling pixels")
 include(GNUInstallDirs)
 
 set(BUILD_PIXEL TRUE CACHE BOOL "Build the library")
@@ -37,7 +37,7 @@ set_target_properties(Pixel PROPERTIES
 
 if(${ENABLE_EXTENSIONS})
 add_compile_definitions("ENABLE_EXTENSIONS")
-set_target_properties(Pixel PROPERTIES COMPILE_FLAGS "-mavx2 -msse4")
+set_target_properties(Pixel PROPERTIES COMPILE_FLAGS "-mavx2")
 endif()
 
 target_include_directories(
