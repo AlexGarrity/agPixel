@@ -24,7 +24,6 @@ Using this, you can expect a speedup of ~2x for basic arithmetic operations, bas
 
 ## Coming Soon
 *I make no promises, you can see the commit history in my other projects*
-- Full support for SIMD extensions (just AVX2)
 - HSL representations of pixels
 - More operator overloads
 - Built-in pixel array type for representing images

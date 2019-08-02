@@ -154,55 +154,63 @@ PIXEL_API inline fRGB operator/(const fRGB& a, const fRGB& b) {
 }
 
 PIXEL_API inline fRGB operator+(const fRGB& rgb, const float value) {
-  return {rgb.R() + value, rgb.G() + value, rgb.B() + value};
+  auto x = Add(rgb.R(), value, rgb.G(), value, rgb.B(), value, 0.0f, 0.0f);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline fRGB operator-(const fRGB& rgb, const float value) {
-  return {rgb.R() - value, rgb.G() - value, rgb.B() - value};
+  auto x = Sub(rgb.R(), value, rgb.G(), value, rgb.B(), value, 0.0f, 0.0f);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline fRGB operator*(const fRGB& rgb, const float value) {
-  return {rgb.R() * value, rgb.G() * value, rgb.B() * value};
+  auto x = Mul(rgb.R(), value, rgb.G(), value, rgb.B(), value, 0.0f, 0.0f);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline fRGB operator/(const fRGB& rgb, const float value) {
-  return {rgb.R() / value, rgb.G() / value, rgb.B() / value};
+  auto x = Div(rgb.R(), value, rgb.G(), value, rgb.B(), value, 0.0f, 0.0f);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline fRGBA operator+(const fRGBA& a, const fRGBA& b) {
-  return {a.R() + b.R(), a.G() + b.G(), a.B() + b.B(), a.A() + b.A()};
+  auto x = Add(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), a.A(), b.A());
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline fRGBA operator-(const fRGBA& a, const fRGBA& b) {
-  return {a.R() - b.R(), a.G() - b.G(), a.B() - b.B(), a.A() - b.A()};
+  auto x = Sub(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), a.A(), b.A());
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline fRGBA operator*(const fRGBA& a, const fRGBA& b) {
-  return {a.R() * b.R(), a.G() * b.G(), a.B() * b.B(), a.A() * b.A()};
+  auto x = Mul(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), a.A(), b.A());
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline fRGBA operator/(const fRGBA& a, const fRGBA& b) {
-  return {a.R() / b.R(), a.G() / b.G(), a.B() / b.B(), a.A() / b.A()};
+  auto x = Div(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), a.A(), b.A());
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline fRGBA operator+(const fRGBA& rgba, const float value) {
-  return {rgba.R() + value, rgba.G() + value, rgba.B() + value,
-          rgba.A() + value};
+  auto x = Add(rgba.R(), value, rgba.G(), value, rgba.B(), value, rgba.A(), value);
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline fRGBA operator-(const fRGBA& rgba, const float value) {
-  return {rgba.R() - value, rgba.G() - value, rgba.B() - value,
-          rgba.A() - value};
+  auto x = Sub(rgba.R(), value, rgba.G(), value, rgba.B(), value, rgba.A(), value);
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline fRGBA operator*(const fRGBA& rgba, const float value) {
-  return {rgba.R() * value, rgba.G() * value, rgba.B() * value,
-          rgba.A() * value};
+  auto x = Mul(rgba.R(), value, rgba.G(), value, rgba.B(), value, rgba.A(), value);
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline fRGBA operator/(const fRGBA& rgba, const float value) {
-  return {rgba.R() / value, rgba.G() / value, rgba.B() / value,
-          rgba.A() / value};
+  auto x = Div(rgba.R(), value, rgba.G(), value, rgba.B(), value, rgba.A(), value);
+  return {x[0], x[1], x[2], x[3]};
 }
 
 }  // namespace Pixel

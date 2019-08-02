@@ -1,4 +1,5 @@
 #include "PixelDouble.hpp"
+#include "PixelMath.hpp"
 
 namespace Pixel {
 
@@ -133,71 +134,83 @@ void dRGBA::operator/=(double value) {
 // Static operator overloads
 
 PIXEL_API inline dRGB operator+(const dRGB& a, const dRGB& b) {
-  return {a.R() + b.R(), a.G() + b.G(), a.B() + b.B()};
+  auto x = Add(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), 0.0, 0.0);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline dRGB operator-(const dRGB& a, const dRGB& b) {
-  return {a.R() - b.R(), a.G() - b.G(), a.B() - b.B()};
+  auto x = Sub(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), 0.0, 0.0);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline dRGB operator*(const dRGB& a, const dRGB& b) {
-  return {a.R() * b.R(), a.G() * b.G(), a.B() * b.B()};
+  auto x = Mul(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), 0.0, 0.0);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline dRGB operator/(const dRGB& a, const dRGB& b) {
-  return {a.R() / b.R(), a.G() / b.G(), a.B() / b.B()};
+  auto x = Div(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), 0.0, 0.0);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline dRGB operator+(const dRGB& rgb, const double value) {
-  return {rgb.R() + value, rgb.G() + value, rgb.B() + value};
+  auto x = Add(rgb.R(), value, rgb.G(), value, rgb.B(), value, 0.0, 0.0);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline dRGB operator-(const dRGB& rgb, const double value) {
-  return {rgb.R() - value, rgb.G() - value, rgb.B() - value};
+  auto x = Sub(rgb.R(), value, rgb.G(), value, rgb.B(), value, 0.0, 0.0);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline dRGB operator*(const dRGB& rgb, const double value) {
-  return {rgb.R() * value, rgb.G() * value, rgb.B() * value};
+  auto x = Mul(rgb.R(), value, rgb.G(), value, rgb.B(), value, 0.0, 0.0);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline dRGB operator/(const dRGB& rgb, const double value) {
-  return {rgb.R() / value, rgb.G() / value, rgb.B() / value};
+  auto x = Div(rgb.R(), value, rgb.G(), value, rgb.B(), value, 0.0, 0.0);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline dRGBA operator+(const dRGBA& a, const dRGBA& b) {
-  return {a.R() + b.R(), a.G() + b.G(), a.B() + b.B(), a.A() + b.A()};
+  auto x = Add(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), a.A(), b.A());
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline dRGBA operator-(const dRGBA& a, const dRGBA& b) {
-  return {a.R() - b.R(), a.G() - b.G(), a.B() - b.B(), a.A() - b.A()};
+  auto x = Sub(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), a.A(), b.A());
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline dRGBA operator*(const dRGBA& a, const dRGBA& b) {
-  return {a.R() * b.R(), a.G() * b.G(), a.B() * b.B(), a.A() * b.A()};
+  auto x = Mul(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), a.A(), b.A());
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline dRGBA operator/(const dRGBA& a, const dRGBA& b) {
-  return {a.R() / b.R(), a.G() / b.G(), a.B() / b.B(), a.A() / b.A()};
+  auto x = Div(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), a.A(), b.A());
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline dRGBA operator+(const dRGBA& rgba, const double value) {
-  return {rgba.R() + value, rgba.G() + value, rgba.B() + value,
-          rgba.A() + value};
+  auto x = Add(rgba.R(), value, rgba.G(), value, rgba.B(), value, rgba.A(), value);
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline dRGBA operator-(const dRGBA& rgba, const double value) {
-  return {rgba.R() - value, rgba.G() - value, rgba.B() - value,
-          rgba.A() - value};
+  auto x = Sub(rgba.R(), value, rgba.G(), value, rgba.B(), value, rgba.A(), value);
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline dRGBA operator*(const dRGBA& rgba, const double value) {
-  return {rgba.R() * value, rgba.G() * value, rgba.B() * value,
-          rgba.A() * value};
+  auto x = Mul(rgba.R(), value, rgba.G(), value, rgba.B(), value, rgba.A(), value);
+  return {x[0], x[1], x[2], x[3]};
 }
 
 PIXEL_API inline dRGBA operator/(const dRGBA& rgba, const double value) {
-  return {rgba.R() / value, rgba.G() / value, rgba.B() / value,
-          rgba.A() / value};
+  auto x = Div(rgba.R(), value, rgba.G(), value, rgba.B(), value, rgba.A(), value);
+  return {x[0], x[1], x[2], x[3]};
 }
 
 }  // namespace Pixel
