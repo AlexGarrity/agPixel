@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PixelCore.hpp"
+#include <cstdint>
 
 // Traditional integer representations of pixels
 // Designed to be highly efficient and use as little space as possible
@@ -11,54 +12,54 @@ namespace Pixel {
 // RGB is the simplest way to represent a pixel, using only red, green, and blue
 class PIXEL_API RGB {
 protected:
-    char _r;
-    char _g;
-    char _b;
+    uint8_t _r;
+    uint8_t _g;
+    uint8_t _b;
 
 public:
-    explicit RGB(const char* rgb);
-    RGB(char r, char g, char b);
+    explicit RGB(const uint8_t* rgb);
+    RGB(uint8_t r, uint8_t g, uint8_t b);
     RGB();
 
-    char R() const;
-    char& R();
+    uint8_t R() const;
+    uint8_t& R();
 
-    char G() const;
-    char& G();
+    uint8_t G() const;
+    uint8_t& G();
 
-    char B() const;
-    char& B();
+    uint8_t B() const;
+    uint8_t& B();
 
 public:
     void operator+=(const RGB& other);
     void operator-=(const RGB& other);
 
-    virtual void operator+=(char value);
-    virtual void operator-=(char value);
-    virtual void operator*=(char value);
-    virtual void operator/=(char value);
+    virtual void operator+=(uint8_t value);
+    virtual void operator-=(uint8_t value);
+    virtual void operator*=(uint8_t value);
+    virtual void operator/=(uint8_t value);
 };
 
 // RGBA is an extension of RGB, adding support for alpha
 class PIXEL_API RGBA : public RGB {
 protected:
-    char _a;
+    uint8_t _a;
 
 public:
-    RGBA(const char *rgba);
-    RGBA(char r, char g, char b, char a);
+    RGBA(const uint8_t *rgba);
+    RGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
     RGBA();
 
-    char A() const;
-    char& A();
+    uint8_t A() const;
+    uint8_t& A();
 
 public:
     void operator+=(const RGBA& other);
     void operator-=(const RGBA& other);
-    void operator+=(char value) override;
-    void operator-=(char value) override;
-    void operator*=(char value) override;
-    void operator/=(char value) override;
+    void operator+=(uint8_t value) override;
+    void operator-=(uint8_t value) override;
+    void operator*=(uint8_t value) override;
+    void operator/=(uint8_t value) override;
 };
 
 }; // namespace Pixel

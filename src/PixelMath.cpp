@@ -4,21 +4,24 @@
 // Caution:  This file has a really inconsistent code style
 // Everything else is Chromium / Webkit, this is maybe LLVM?
 
+namespace Pixel {
+
 #if defined(ENABLE_EXTENSIONS)
 // Extensions are enabled, so use AVX2 rather than regular maths
 
 // Some handy little helper functions for unpacking __mm256 types
-char* UnpackChar(__m256i chars) {
-  auto out = new char[4];
-  out[0] = chars[0];
-  out[1] = chars[1];
-  out[2] = chars[2];
-  out[3] = chars[3];
+BQuad UnpackChar(__m256i chars) {
+  BQuad out;
+  // These are cast as they sometimes come in as wider values
+  out[0] = static_cast<BYTE>(chars[0]);
+  out[1] = static_cast<BYTE>(chars[1]);
+  out[2] = static_cast<BYTE>(chars[2]);
+  out[3] = static_cast<BYTE>(chars[3]);
   return out;
 }
 
-float* UnpackFloat(__m256 floats) {
-  auto out = new float[4];
+FQuad UnpackFloat(__m256 floats) {
+  FQuad out;
   out[0] = floats[0];
   out[1] = floats[1];
   out[2] = floats[2];
@@ -26,8 +29,8 @@ float* UnpackFloat(__m256 floats) {
   return out;
 }
 
-double* UnpackDouble(__m256d doubles) {
-  auto out = new double[4];
+DQuad UnpackDouble(__m256d doubles) {
+  DQuad out;
   out[0] = doubles[0];
   out[1] = doubles[1];
   out[2] = doubles[2];
@@ -35,39 +38,98 @@ double* UnpackDouble(__m256d doubles) {
   return out;
 }
 
-char *Add(char a1, char a2, char b1, char b2, char c1, char c2, char d1, char d2) {
-  // Pack the chars into an __m256i...
+BQuad Add(BYTEQUAD) {
   __m256i a{a1, b1, c1, d1};
   __m256i b{a2, b2, c2, d2};
-  auto result = _mm256_add_epi8(a, b);
-  // Unpack and return
+  auto result = _mm256_adds_epu8(a, b);
   return UnpackChar(result);
 }
 
-float *Add(float a1, float a2, float b1, float b2, float c1, float c2, float d1, float d2) {
+FQuad Add(FLOATQUAD) {
   __m256 a{a1, b1, c1, d1};
   __m256 b{a2, b2, c2, d2};
   auto result = _mm256_add_ps(a, b);
   return UnpackFloat(result);
 }
 
-double *Add(double a1, double a2, double b1, double b2, double c1, double c2, double d1, double d2) {
+DQuad Add(DOUBLEQUAD) {
   __m256d a{a1, b1, c1, d1};
   __m256d b{a2, b2, c2, d2};
   auto result = _mm256_add_pd(a, b);
   return UnpackDouble(result);
 }
 
-char *Mul(char a1, char a2, char b1, char b2, char c1, char c2, char d1, char d2) {
+BQuad Mul(BYTEQUAD) {
   __m256i a{a1, b1, c1, d1};
   __m256i b{a1, b1, c1, d1};
-  //auto result = _mm256_mul_epi8(a, b);
+  auto result = _mm256_mul_epu32(a, b);
+  return UnpackChar(result);
 }
+
+FQuad Mul(FLOATQUAD) {
+  __m256 a{a1, b1, c1, d1};
+  __m256 b{a2, b2, c2, d2};
+  auto result = _mm256_mul_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Mul(DOUBLEQUAD) {
+  __m256d a{a1, b1, c1, d1};
+  __m256d b{a2, b2, c2, d2};
+  auto result = _mm256_mul_pd(a, b);
+  return UnpackDouble(result);
+}
+
+BQuad Sub(BYTEQUAD) {
+  // There's no function for explicit subtraction, so we cast to 16-bit values and add negatives
+  __m256i a{a1, b1, c1, d1};
+  __m256i b{-a2, -b2, -c2, -d2};
+  auto result = _mm256_adds_epi16(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Sub(FLOATQUAD) {
+  __m256 a{a1, b1, c1, d1};
+  __m256 b{-a2, -b2, -c2, -d2};
+  auto result = _mm256_add_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Sub(DOUBLEQUAD) {
+  __m256d a{a1, b1, c1, d1};
+  __m256d b{a2, b2, c2, d2};
+  auto result = _mm256_add_pd(a, b);
+  return UnpackDouble(result);
+}
+
+BQuad Div(BYTEQUAD) {
+  __m256i a{a1, b1, c1, d1};
+  __m256i b{1/a2, 1/b2, 1/c2, 1/d2};
+  auto result = _mm256_mul_epu32(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Div(FLOATQUAD) {
+  __m256 a{a1, b1, c1, d1};
+  __m256 b{a2, b2, c2, d2};
+  auto result = _mm256_div_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Div(DOUBLEQUAD) {
+  __m256d a{a1, b1, c1, d1};
+  __m256d b{a2, b2, c2, d2};
+  auto result = _mm256_div_pd(a, b);
+  return UnpackDouble(result);
+}
+
 
 #else
+// No extensions so we'll use regular functions...
 
-char *Add(char a1, char a2, char b1, char b2, char c1, char c2, char d1, char d2) {
-  char *out = new char[4];
+template <typename T>
+Quad<T> Add(T a1, T a2, T b1, T b2, T c1, T c2, T d1, T d2) {
+  Quad<T> out;
   out[0] = a1 + a1;
   out[1] = b1 + b2;
   out[2] = c1 + c2;
@@ -75,22 +137,88 @@ char *Add(char a1, char a2, char b1, char b2, char c1, char c2, char d1, char d2
   return out;
 }
 
-float *Add(float a1, float a2, float b1, float b2, float c1, float c2, float d1, float d2) {
-  float *out = new float[4];
-  out[0] = a1 + a1;
-  out[1] = b1 + b2;
-  out[2] = c1 + c2;
-  out[3] = d1 + d2;
+template <typename T>
+Quad<T> Mul(T a1, T a2, T b1, T b2, T c1, T c2, T d1, T d2) {
+  Quad<T> out;
+  out[0] = a1 * a1;
+  out[1] = b1 * b2;
+  out[2] = c1 * c2;
+  out[3] = d1 * d2;
   return out;
 }
 
-double *Add(double a1, double a2, double b1, double b2, double c1, double c2, double d1, double d2) {
-  double *out = new double[4];
-  out[0] = a1 + a1;
-  out[1] = b1 + b2;
-  out[2] = c1 + c2;
-  out[3] = d1 + d2;
+template <typename T>
+Quad<T> Sub(T a1, T a2, T b1, T b2, T c1, T c2, T d1, T d2) {
+  Quad<T> out;
+  out[0] = a1 - a1;
+  out[1] = b1 - b2;
+  out[2] = c1 - c2;
+  out[3] = d1 - d2;
   return out;
+}
+
+template <typename T>
+Quad<T> Div(T a1, T a2, T b1, T b2, T c1, T c2, T d1, T d2) {
+  Quad<T> out;
+  out[0] = a1 / a1;
+  out[1] = b1 / b2;
+  out[2] = c1 / c2;
+  out[3] = d1 / d2;
+  return out;
+}
+
+
+BQuad Add(BYTEQUAD) {
+  return Add<BYTE>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+FQuad Add(FLOATQUAD) {
+  return Add<float>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+DQuad Add(DOUBLEQUAD) {
+  return Add<double>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+
+BQuad Mul(BYTEQUAD) {
+  return Mul<BYTE>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+FQuad Mul(FLOATQUAD) {
+  return Mul<float>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+DQuad Mul(DOUBLEQUAD) {
+  return Mul<double>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+
+BQuad Sub(BYTEQUAD) {
+  return Sub<BYTE>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+FQuad Sub(FLOATQUAD) {
+  return Sub<float>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+DQuad Sub(DOUBLEQUAD) {
+  return Sub<double>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+
+BQuad Div(BYTEQUAD) {
+  return Div<BYTE>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+FQuad Div(FLOATQUAD) {
+  return Div<float>(a1, a2, b1, b2, c1, c2, d1, d2);
+}
+
+DQuad Div(DOUBLEQUAD) {
+  return Div<double>(a1, a2, b1, b2, c1, c2, d1, d2);
 }
 
 #endif
+
+}

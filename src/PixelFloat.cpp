@@ -1,4 +1,5 @@
 #include "PixelFloat.hpp"
+#include "PixelMath.hpp"
 
 namespace Pixel {
 
@@ -6,7 +7,7 @@ namespace Pixel {
 
 fRGB::fRGB(float r, float g, float b) : _r{r}, _g{g}, _b{b} {}
 
-fRGB::fRGB() : fRGB(0.0, 0.0, 0.0) {}
+fRGB::fRGB() : fRGB(0.0f, 0.0f, 0.0f) {}
 
 float fRGB::R() const {
   return _r;
@@ -17,7 +18,7 @@ float& fRGB::R() {
 }
 
 unsigned fRGB::uR() const {
-  return static_cast<unsigned>(_r * 255.99);
+  return static_cast<unsigned>(_r * 255.99f);
 }
 
 float fRGB::G() const {
@@ -29,7 +30,7 @@ float& fRGB::G() {
 }
 
 unsigned fRGB::uG() const {
-  return static_cast<unsigned>(_g * 255.99);
+  return static_cast<unsigned>(_g * 255.99f);
 }
 
 float fRGB::B() const {
@@ -41,14 +42,14 @@ float& fRGB::B() {
 }
 
 unsigned fRGB::uB() const {
-  return static_cast<unsigned>(_b * 255.99);
+  return static_cast<unsigned>(_b * 255.99f);
 }
 
 // fRGBA functions
 
 fRGBA::fRGBA(float r, float g, float b, float a) : fRGB(r, g, b), _a{a} {}
 
-fRGBA::fRGBA() : fRGBA(0.0, 0.0, 0.0, 0.0) {}
+fRGBA::fRGBA() : fRGBA(0.0f, 0.0f, 0.0f, 0.0f) {}
 
 float fRGBA::A() const {
   return _a;
@@ -59,7 +60,7 @@ float& fRGBA::A() {
 }
 
 unsigned fRGBA::uA() const {
-  return static_cast<unsigned>(_a * 255.99);
+  return static_cast<unsigned>(_a * 255.99f);
 }
 
 // Operator overloads
@@ -133,19 +134,23 @@ void fRGBA::operator/=(float value) {
 // Static operator overloads
 
 PIXEL_API inline fRGB operator+(const fRGB& a, const fRGB& b) {
-  return {a.R() + b.R(), a.G() + b.G(), a.B() + b.B()};
+  auto x = Add(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), 0.0f, 0.0f);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline fRGB operator-(const fRGB& a, const fRGB& b) {
-  return {a.R() - b.R(), a.G() - b.G(), a.B() - b.B()};
+  auto x = Sub(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), 0.0f, 0.0f);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline fRGB operator*(const fRGB& a, const fRGB& b) {
-  return {a.R() * b.R(), a.G() * b.G(), a.B() * b.B()};
+  auto x = Mul(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), 0.0f, 0.0f);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline fRGB operator/(const fRGB& a, const fRGB& b) {
-  return {a.R() / b.R(), a.G() / b.G(), a.B() / b.B()};
+  auto x = Div(a.R(), b.R(), a.G(), b.G(), a.B(), b.B(), 0.0f, 0.0f);
+  return {x[0], x[1], x[2]};
 }
 
 PIXEL_API inline fRGB operator+(const fRGB& rgb, const float value) {
