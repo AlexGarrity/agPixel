@@ -11,7 +11,7 @@ include(GNUInstallDirs)
 
 set(BUILD_PIXEL TRUE CACHE BOOL "Build the library")
 set(BUILD_SHARED_LIBS TRUE CACHE BOOL "Build the library shared (true) or static (false)")
-set(ENABLE_EXTENSIONS ON CACHE BOOL "Enable the use of SIMD extensions")
+set(ENABLE_EXTENSIONS FALSE CACHE BOOL "Enable the use of SIMD extensions")
 
 if(${BUILD_PIXEL})
 add_compile_definitions("BUILD_LIB")

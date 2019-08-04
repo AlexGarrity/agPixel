@@ -169,7 +169,7 @@ Quad<T> Div(T a1, T a2, T b1, T b2, T c1, T c2, T d1, T d2) {
 
 
 BQuad Add(BYTEQUAD) {
-  return Add<BYTE>(a1, a2, b1, b2, c1, c2, d1, d2);
+  return Add<BYTE>(a1, a2, b1, b2, c1, c2, d1,  d2);
 }
 
 FQuad Add(FLOATQUAD) {
