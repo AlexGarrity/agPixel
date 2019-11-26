@@ -1,12 +1,6 @@
-
-# The following guide was a massive help:
-# https://stackoverflow.com/questions/17511496/how-to-create-a-shared-library-with-cmake
-# By that, I mean I pretty much copied it
-# Thanks @Jezz
-
 cmake_minimum_required(VERSION 3.12)
 
-project(libPixel VERSION 1.1 DESCRIPTION "Simple library for handling libPixels")
+project(libPixel VERSION 1.2 DESCRIPTION "Simple library for handling libPixels")
 include(GNUInstallDirs)
 
 set(BUILD_libPixel TRUE CACHE BOOL "Build the library")
@@ -23,28 +17,45 @@ else()
     set (LIBRARY_KEYWORD "STATIC")
 endif()
 
-add_library(
-    libPixel ${LIBRARY_KEYWORD}
-    src/PixelInt.cpp
-    src/PixelFloat.cpp
-    src/PixelDouble.cpp
-    src/PixelMath.cpp
+set(SOURCE
+    ${CMAKE_SOURCE_DIR}/src/PixelDouble.cpp
+    ${CMAKE_SOURCE_DIR}/src/PixelFloat.cpp
+    ${CMAKE_SOURCE_DIR}/src/PixelInt.cpp
+    ${CMAKE_SOURCE_DIR}/src/PixelMath.cpp
 )
+
+if(${ENABLE_EXTENSIONS})
+    set(MATH_SOURCE
+        ${CMAKE_SOURCE_DIR}/src/Math/PixelMathAVX.cpp
+    )
+    # Define the stuff we need to turn extensions on
+    set(EXTRA_COMPILE_DEFS "ENABLE_EXTENSIONS")
+    set(EXTRA_COMPILE_FLAGS "-mavx2")
+else()
+    set(MATH_SOURCE
+        ${CMAKE_SOURCE_DIR}/src/Math/PixelMathRegular.cpp
+    )
+    # No extra definitions needed.  Vanilla C++
+    set(EXTRA_COMPILE_DEFS "")
+    set(EXTRA_COMPILE_FLAGS "")
+endif()
+
+add_library(
+    libPixel ${LIBRARY_KEYWORD} ${SOURCE} ${MATH_SOURCE}
+)
+
+add_compile_definitions(${EXTRA_COMPILE_DEFS})
+set_target_properties(libPixel PROPERTIES COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS})
 
 set_target_properties(
     libPixel PROPERTIES
     VERSION ${PROJECT_VERSION}
-    SOVERSION 1
+    SOVERSION ${PROJECT_VERSION}
     PREFIX ""
 )
 
-if(${ENABLE_EXTENSIONS})
-    add_compile_definitions("ENABLE_EXTENSIONS")
-    set_target_properties(libPixel PROPERTIES COMPILE_FLAGS "-mavx2")
-endif()
-
 target_include_directories(
-    libPixel PUBLIC include
+    libPixel PRIVATE ${CMAKE_SOURCE_DIR}/include
 )
 
 install(

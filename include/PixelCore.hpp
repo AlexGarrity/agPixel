@@ -20,6 +20,7 @@
 
 #if defined(ENABLE_EXTENSIONS)
 #if defined(__AVX2__)
+#define FOUND_AVX
 #include <immintrin.h>
 #else
 // No AVX2 support, so we can't use extensions

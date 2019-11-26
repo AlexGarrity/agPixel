@@ -1,6 +1,11 @@
 #pragma once
 
+// PixelMath automatically chooses the right version of the header dependent of whether or not you enabled extensions
+// It otherwise does nothing
+
 #include <cstdint>
+
+#include "PixelCore.hpp"
 
 namespace Pixel {
 
@@ -8,9 +13,9 @@ namespace Pixel {
 #define BYTE uint8_t
 
 // Save lots of space
-#define BYTEQUAD BYTE a1, BYTE a2, BYTE b1, BYTE b2, BYTE c1, BYTE c2, BYTE d1, BYTE d2
-#define FLOATQUAD float a1, float a2, float b1, float b2, float c1, float c2, float d1, float d2
-#define DOUBLEQUAD double a1, double a2, double b1, double b2, double c1, double c2, double d1, double d2
+#define BYTEQUAD const BYTE a1, const BYTE a2, const BYTE b1, const BYTE b2, const BYTE c1, const BYTE c2, const BYTE d1, const BYTE d2
+#define FLOATQUAD const float a1, const float a2, const float b1, const float b2, const float c1, const float c2, const float d1, const float d2
+#define DOUBLEQUAD const double a1, const double a2, const double b1, const double b2, const double c1, const double c2, const double d1, const double d2
 
 // Just a little something so I don't have to use pointer arrays
 template <typename T>
