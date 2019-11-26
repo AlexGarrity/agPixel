@@ -1,8 +1,4 @@
-#include "Math/PixelMathRegular.hpp"
-#include "PixelCore.hpp"
-
-// Caution:  This file has a really inconsistent code style
-// Everything else is Chromium / Webkit, this is maybe LLVM?
+#include "Math/PixelMath.hpp"
 
 namespace Pixel {
 

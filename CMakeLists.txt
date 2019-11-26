@@ -25,15 +25,23 @@ set(SOURCE
 )
 
 if(${ENABLE_EXTENSIONS})
+    # Enable the AVX versions of PixelMath and PixelPackedMath
     set(MATH_SOURCE
         ${CMAKE_SOURCE_DIR}/src/Math/PixelMathAVX.cpp
+    )
+    set(PACKED_MATH_SOURCE
+        ${CMAKE_SOURCE_DIR}/src/Math/PixelPackedMathAVX.cpp
     )
     # Define the stuff we need to turn extensions on
     set(EXTRA_COMPILE_DEFS "ENABLE_EXTENSIONS")
     set(EXTRA_COMPILE_FLAGS "-mavx2")
 else()
+    # Enable the vanilla versions of PixelMath and PixelPackedMath
     set(MATH_SOURCE
-        ${CMAKE_SOURCE_DIR}/src/Math/PixelMathRegular.cpp
+        ${CMAKE_SOURCE_DIR}/src/Math/PixelMath.cpp
+    )
+    set(PACKED_MATH_SOURCE
+        ${CMAKE_SOURCE_DIR}/src/Math/PixelPackedMath.cpp
     )
     # No extra definitions needed.  Vanilla C++
     set(EXTRA_COMPILE_DEFS "")
@@ -41,7 +49,7 @@ else()
 endif()
 
 add_library(
-    libPixel ${LIBRARY_KEYWORD} ${SOURCE} ${MATH_SOURCE}
+    libPixel ${LIBRARY_KEYWORD} ${SOURCE} ${MATH_SOURCE} ${PACKED_MATH_SOURCE}
 )
 
 add_compile_definitions(${EXTRA_COMPILE_DEFS})
