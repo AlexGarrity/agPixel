@@ -24,6 +24,7 @@
 #include <immintrin.h>
 #else
 // No AVX2 support, so we can't use extensions
-#error "Extensions have been enabled, but aren't available - please reconfigure the project"
+#error                                                                         \
+    "Extensions have been enabled, but aren't available - please reconfigure the project"
 #endif
 #endif

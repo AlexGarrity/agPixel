@@ -78,7 +78,8 @@ DQuad Mul(DOUBLEQUAD) {
 }
 
 BQuad Sub(BYTEQUAD) {
-  // There's no function for explicit subtraction, so we cast to 16-bit values and add negatives
+  // There's no function for explicit subtraction, so we cast to 16-bit values
+  // and add negatives
   __m256i a{a1, b1, c1, d1};
   __m256i b{-a2, -b2, -c2, -d2};
   auto result = _mm256_adds_epi16(a, b);
@@ -101,7 +102,7 @@ DQuad Sub(DOUBLEQUAD) {
 
 BQuad Div(BYTEQUAD) {
   __m256i a{a1, b1, c1, d1};
-  __m256i b{1/a2, 1/b2, 1/c2, 1/d2};
+  __m256i b{1 / a2, 1 / b2, 1 / c2, 1 / d2};
   auto result = _mm256_mul_epu32(a, b);
   return UnpackChar(result);
 }
@@ -120,4 +121,4 @@ DQuad Div(DOUBLEQUAD) {
   return UnpackDouble(result);
 }
 
-}
+} // namespace Pixel
