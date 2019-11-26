@@ -1,5 +1,8 @@
 #include "Math/PixelMathAVX.hpp"
 
+#include "PixelCore.hpp"
+#include "PixelMath.hpp"
+
 // Extensions are enabled, so use AVX2 rather than regular maths
 namespace Pixel {
 

@@ -3,12 +3,15 @@ cmake_minimum_required(VERSION 3.12)
 project(libPixel VERSION 1.2 DESCRIPTION "Simple library for handling libPixels")
 include(GNUInstallDirs)
 
+set(EXTRA_COMPILE_DEFS)
+set(EXTRA_COMPILE_FLAGS)
+
 set(BUILD_libPixel TRUE CACHE BOOL "Build the library")
 set(BUILD_SHARED_LIBS TRUE CACHE BOOL "Build the library shared (true) or static (false)")
 set(ENABLE_EXTENSIONS FALSE CACHE BOOL "Enable the use of SIMD extensions")
 
 if(${BUILD_libPixel})
-    add_compile_definitions("BUILD_LIB")
+    set(EXTRA_COMPILE_DEFS ${EXTRA_COMPILE_DEFS} "BUILD_LIB")
 endif()
 
 if(${BUILD_SHARED_LIBS})
@@ -33,8 +36,8 @@ if(${ENABLE_EXTENSIONS})
         ${CMAKE_SOURCE_DIR}/src/Math/PixelPackedMathAVX.cpp
     )
     # Define the stuff we need to turn extensions on
-    set(EXTRA_COMPILE_DEFS "ENABLE_EXTENSIONS")
-    set(EXTRA_COMPILE_FLAGS "-mavx2")
+    set(EXTRA_COMPILE_DEFS ${EXTRA_COMPILE_DEFS} "ENABLE_EXTENSIONS")
+    set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} "-mavx2")
 else()
     # Enable the vanilla versions of PixelMath and PixelPackedMath
     set(MATH_SOURCE
@@ -44,16 +47,18 @@ else()
         ${CMAKE_SOURCE_DIR}/src/Math/PixelPackedMath.cpp
     )
     # No extra definitions needed.  Vanilla C++
-    set(EXTRA_COMPILE_DEFS "")
-    set(EXTRA_COMPILE_FLAGS "")
 endif()
 
 add_library(
     libPixel ${LIBRARY_KEYWORD} ${SOURCE} ${MATH_SOURCE} ${PACKED_MATH_SOURCE}
 )
 
-add_compile_definitions(${EXTRA_COMPILE_DEFS})
-set_target_properties(libPixel PROPERTIES COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS})
+if(${EXTRA_COMPILE_DEFS}!="")
+    add_compile_definitions(${EXTRA_COMPILE_DEFS})
+endif()
+if(${EXTRA_COMPILE_FLAGS}!="")
+    set_target_properties(libPixel PROPERTIES COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS})
+endif()
 
 set_target_properties(
     libPixel PROPERTIES

@@ -1,5 +1,8 @@
 #include "Math/PixelMath.hpp"
 
+#include "PixelCore.hpp"
+#include "PixelMath.hpp"
+
 namespace Pixel {
 
 // No extensions so we'll use regular functions...

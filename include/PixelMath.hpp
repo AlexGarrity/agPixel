@@ -11,6 +11,8 @@ namespace Pixel {
 
 // Save some space
 #define BYTE uint8_t
+#define WORD uint32_t
+#define DWORD uint64_t
 
 // Save lots of space
 #define BYTEQUAD const BYTE a1, const BYTE a2, const BYTE b1, const BYTE b2, const BYTE c1, const BYTE c2, const BYTE d1, const BYTE d2

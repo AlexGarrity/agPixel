@@ -1,5 +1,9 @@
 #include "Math/PixelPackedMath.hpp"
 
+#include "PixelCore.hpp"
+#include "PixelMath.hpp"
+#include "PixelPackedMath.hpp"
+
 namespace Pixel {
 
     BQuad4 Add(BQuad4 a, BQuad4 b) {
