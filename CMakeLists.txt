@@ -3,9 +3,6 @@ cmake_minimum_required(VERSION 3.12)
 project(libPixel VERSION 1.2 DESCRIPTION "Simple library for handling libPixels")
 include(GNUInstallDirs)
 
-set(EXTRA_COMPILE_DEFS)
-set(EXTRA_COMPILE_FLAGS)
-
 set(BUILD_libPixel TRUE CACHE BOOL "Build the library")
 set(BUILD_SHARED_LIBS TRUE CACHE BOOL "Build the library shared (true) or static (false)")
 set(ENABLE_EXTENSIONS FALSE CACHE BOOL "Enable the use of SIMD extensions")
@@ -46,17 +43,18 @@ else()
     set(PACKED_MATH_SOURCE
         ${CMAKE_SOURCE_DIR}/src/Math/PixelPackedMath.cpp
     )
+    set(EXTRA_COMPILE_DEFS ${EXTRA_COMPILE_DEFS})
+    set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS})
     # No extra definitions needed.  Vanilla C++
 endif()
 
 add_library(
     libPixel ${LIBRARY_KEYWORD} ${SOURCE} ${MATH_SOURCE} ${PACKED_MATH_SOURCE}
 )
-
-if(${EXTRA_COMPILE_DEFS}!="")
+if(NOT "${EXTRA_COMPILE_DEFS}" STREQUAL "")
     add_compile_definitions(${EXTRA_COMPILE_DEFS})
 endif()
-if(${EXTRA_COMPILE_FLAGS}!="")
+if(NOT "${EXTRA_COMPILE_FLAGS}" STREQUAL "")
     set_target_properties(libPixel PROPERTIES COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS})
 endif()
 
