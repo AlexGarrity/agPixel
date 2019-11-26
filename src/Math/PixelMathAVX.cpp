@@ -78,32 +78,30 @@ DQuad Mul(DOUBLEQUAD) {
 }
 
 BQuad Sub(BYTEQUAD) {
-  // There's no function for explicit subtraction, so we cast to 16-bit values
-  // and add negatives
   __m256i a{a1, b1, c1, d1};
-  __m256i b{-a2, -b2, -c2, -d2};
-  auto result = _mm256_adds_epi16(a, b);
+  __m256i b{a2, b2, c2, d2};
+  auto result = _mm256_sub_epi16(a, b);
   return UnpackChar(result);
 }
 
 FQuad Sub(FLOATQUAD) {
   __m256 a{a1, b1, c1, d1};
-  __m256 b{-a2, -b2, -c2, -d2};
-  auto result = _mm256_add_ps(a, b);
+  __m256 b{a2, b2, c2, d2};
+  auto result = _mm256_sub_ps(a, b);
   return UnpackFloat(result);
 }
 
 DQuad Sub(DOUBLEQUAD) {
   __m256d a{a1, b1, c1, d1};
   __m256d b{a2, b2, c2, d2};
-  auto result = _mm256_add_pd(a, b);
+  auto result = _mm256_sub_pd(a, b);
   return UnpackDouble(result);
 }
 
 BQuad Div(BYTEQUAD) {
-  __m256i a{a1, b1, c1, d1};
-  __m256i b{1 / a2, 1 / b2, 1 / c2, 1 / d2};
-  auto result = _mm256_mul_epu32(a, b);
+  __m256 a{static_cast<float>(a1), static_cast<float>(b1), static_cast<float>(c1), static_cast<float>(d1)};
+  __m256 b{static_cast<float>(a2), static_cast<float>(b2), static_cast<float>(c2), static_cast<float>(d2)};
+  auto result = _mm256_div_ps(a, b);
   return UnpackChar(result);
 }
 

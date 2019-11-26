@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(libPixel VERSION 1.2 DESCRIPTION "Simple library for handling libPixels")
+project(libPixel VERSION 1.2.1 DESCRIPTION "Simple library for handling libPixels")
 include(GNUInstallDirs)
 
 set(BUILD_libPixel TRUE CACHE BOOL "Build the library")
@@ -34,7 +34,11 @@ if(${ENABLE_EXTENSIONS})
     )
     # Define the stuff we need to turn extensions on
     set(EXTRA_COMPILE_DEFS ${EXTRA_COMPILE_DEFS} "ENABLE_EXTENSIONS")
-    set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} "-mavx2")
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} "/arch:AVX2")
+    else()
+        set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} "-mavx2")
+    endif()
 else()
     # Enable the vanilla versions of PixelMath and PixelPackedMath
     set(MATH_SOURCE

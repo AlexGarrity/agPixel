@@ -19,12 +19,15 @@
 #endif
 
 #if defined(ENABLE_EXTENSIONS)
-#if defined(__AVX2__)
-#define FOUND_AVX
-#include <immintrin.h>
-#else
-// No AVX2 support, so we can't use extensions
-#error                                                                         \
-    "Extensions have been enabled, but aren't available - please reconfigure the project"
-#endif
+    #if defined(__AVX2__)
+        #define FOUND_AVX2
+        #include <immintrin.h>
+    #elif defined(__SSE2__)
+        #define FOUND_SSE2
+        #include <immintrin.h>
+    #else
+    // No extension support, so we can't use extensions
+    #error                                                                         \
+        "Extensions have been enabled, but aren't available - please reconfigure the project"
+    #endif
 #endif
