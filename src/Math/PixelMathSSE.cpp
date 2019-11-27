@@ -1,4 +1,4 @@
-#include "Math/PixelMathAVX.hpp"
+#include "Math/PixelMathSSE.hpp"
 
 #include "PixelCore.hpp"
 #include "PixelMath.hpp"
@@ -6,14 +6,18 @@
 // Extensions are enabled, so use AVX2 rather than regular maths
 namespace Pixel {
 
+#define B(x) static_cast<BYTE>(x)
+#define W(x) static_cast<WORD>(x)
+#define D(x) static_cast<DWORD>(x)
+
 // Some handy little helper functions for unpacking __mm256 types
 BQuad UnpackChar(__m128i chars) {
   BQuad out;
   // These are cast as they sometimes come in as wider values
   out[0] = static_cast<BYTE>(chars[0]);
-  out[1] = static_cast<BYTE>(chars[1]);
+  out[1] = static_cast<BYTE>(chars[1] >> 16);
   out[2] = static_cast<BYTE>(chars[2]);
-  out[3] = static_cast<BYTE>(chars[3]);
+  out[3] = static_cast<BYTE>(chars[3] >> 16);
   return out;
 }
 
@@ -35,10 +39,17 @@ DQuad UnpackDouble(__m128d d1, __m128d d2) {
   return out;
 }
 
+__m128i PackBQuad(BQuad b) {
+  __m128i out;
+  out[0] = D(b[0]) | D(b[1]) << 16;
+  out[1] = D(b[2]) | D(b[3]) << 16;
+  return out;
+}
+
 BQuad Add(BYTEQUAD) {
-  __m128i a{a1, b1, c1, d1};
-  __m128i b{a2, b2, c2, d2};
-  auto result = _mm_add_epu8(a, b);
+  __m128i a = PackBQuad(BQuad(a1, b1, c1, d1));
+  __m128i b = PackBQuad(BQuad(a2, b2, c2, d2));
+  auto result = _mm_adds_epu8(a, b);
   return UnpackChar(result);
 }
 
@@ -60,8 +71,8 @@ DQuad Add(DOUBLEQUAD) {
 }
 
 BQuad Mul(BYTEQUAD) {
-  __m128i a{a1, b1, c1, d1};
-  __m128i b{a1, b1, c1, d1};
+  __m128i a = PackBQuad(BQuad(a1, b1, c1, d1));
+  __m128i b = PackBQuad(BQuad(a2, b2, c2, d2));
   auto result = _mm_mul_epu32(a, b);
   return UnpackChar(result);
 }
@@ -84,17 +95,15 @@ DQuad Mul(DOUBLEQUAD) {
 }
 
 BQuad Sub(BYTEQUAD) {
-  // There's no function for explicit subtraction, so we cast to 16-bit values
-  // and add negatives
-  __m128i a{static_cast<int16_t>(a1), static_cast<int16_t>(b1), static_cast<int16_t>(c1), static_cast<int16_t>(d1)};
-  __m128i b{-static_cast<int16_t>(a2), -static_cast<int16_t>(b2), -static_cast<int16_t>(c2), -static_cast<int16_t>(d2)};
-  auto result = _mm_add_epi16(a, b);
+  __m128i a = PackBQuad(BQuad(a1, b1, c1, d1));
+  __m128i b = PackBQuad(BQuad(a2, b2, c2, d2));
+  auto result = _mm_sub_epi16(a, b);
   return UnpackChar(result);
 }
 
 FQuad Sub(FLOATQUAD) {
-  __m256 a{a1, b1, c1, d1};
-  __m256 b{a2, b2, c2, d2};
+  __m128 a{a1, b1, c1, d1};
+  __m128 b{a2, b2, c2, d2};
   auto result = _mm_sub_ps(a, b);
   return UnpackFloat(result);
 }
@@ -110,16 +119,18 @@ DQuad Sub(DOUBLEQUAD) {
 }
 
 BQuad Div(BYTEQUAD) {
-    // This has to be done as floats, as integer division is unsupported
-  __m256 a{static_cast<float>(a1), static_cast<float>(b1), static_cast<float>(c1), static_cast<float>(d1)};
-  __m256 b{static_cast<float>(a2), static_cast<float>(b2), static_cast<float>(c2), static_cast<float>(d2)};
+  // This has to be done as floats, as integer division is unsupported
+  __m128 a{static_cast<float>(a1), static_cast<float>(b1),
+           static_cast<float>(c1), static_cast<float>(d1)};
+  __m128 b{static_cast<float>(a2), static_cast<float>(b2),
+           static_cast<float>(c2), static_cast<float>(d2)};
   auto result = _mm_div_ps(a, b);
   return UnpackChar(result);
 }
 
 FQuad Div(FLOATQUAD) {
-  __m256 a{a1, b1, c1, d1};
-  __m256 b{a2, b2, c2, d2};
+  __m128 a{a1, b1, c1, d1};
+  __m128 b{a2, b2, c2, d2};
   auto result = _mm_div_ps(a, b);
   return UnpackFloat(result);
 }

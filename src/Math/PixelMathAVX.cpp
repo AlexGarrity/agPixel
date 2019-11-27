@@ -99,8 +99,10 @@ DQuad Sub(DOUBLEQUAD) {
 }
 
 BQuad Div(BYTEQUAD) {
-  __m256 a{static_cast<float>(a1), static_cast<float>(b1), static_cast<float>(c1), static_cast<float>(d1)};
-  __m256 b{static_cast<float>(a2), static_cast<float>(b2), static_cast<float>(c2), static_cast<float>(d2)};
+  __m256 a{static_cast<float>(a1), static_cast<float>(b1),
+           static_cast<float>(c1), static_cast<float>(d1)};
+  __m256 b{static_cast<float>(a2), static_cast<float>(b2),
+           static_cast<float>(c2), static_cast<float>(d2)};
   auto result = _mm256_div_ps(a, b);
   return UnpackChar(result);
 }
