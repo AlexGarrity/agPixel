@@ -3,7 +3,7 @@ Lightweight library which provides char, float, and double representation of pix
 all kinds of applications from image libraries to raytracing.  
 
 ## Building
-I haven't tested this yet, but these are the instructions for building...
+Building should be pretty simple, you can just run this:
 
 ```bash
 cmake .
@@ -11,21 +11,31 @@ make
 make install
 ```
 
+Or, what I'd recommend is using `ccmake` or `cmake-gui`.  These will allow you to configure the project to cater your needs.
+I'd also recommend creating a build folder.  To do this, it's just:
+
+```bash
+mkdir build
+cd build
+cmake-gui -S .. -B .
+make
+make install
+```
+
 And that should automagically install it.  
-Note that support for vector extensions is off by default, so if you want those you have to do 
-some extra configuration.  I have no idea how that part works.  Just use ccmake or cmake-gui.
+Note that support for vector extensions is off by default, but you can most likely turn it on and it'll be fine.
+If your CPU doesn't support the extensions, the compiler will throw an error at you.  Just disable extensions in cmake.
 
-## Cool Features
-The library hase limited support for AVX2.  If you toggle `ENABLE_EXTENSIONS` in CMake, the program
-will attempt to build using AVX2 (although it will throw an error if your compiler doesn't support it).  
-Using this, you can expect a speedup of ~2x for basic arithmetic operations, based on some limited testing.
+## Features
+The library has limited support for AVX2 and SSE2.  If you toggle `ENABLE_EXTENSIONS` in CMake, the program
+will first detect which extensions are available, then attempt to build using them.
+Using this, you can expect a bit of a speed up, dependent on which extension set you have enabled.  It's much more apparent when using pixel arrays.
 
-## Possible future additions
-I would like to include operations that allow you to pass multiple pixels into a single math operation,
-leveraging the full power of AVX, but I'm yet to find a nice way to do this due to data width.
-A double pixel will use an entire _mm256_mul_pd operation, whereas I can fit two pixels into an _mm256_mul_ps.
-I may or may not add them in as specialised functions that only apply to specific pixel types.  
+Additionally, there are packed variants of the math functions, which will allow you to process multiple pixels
+at the same time.  These are employed when using pixel arrays as these are designed to store large volumes of pixels.
 
-I've considered adding support for SSE, or maybe even MMX, but I don't think these will be happening.  MMX is
-too old, and has definitely been superceded by SSE and AVX.  On the other hand, SSE is still updated, but I think
-it's being replaced by AVX at this point.  If there's enough (or any) interest in it, I might add it in.
+## Future Additions
+I would like to find some way to multiply BYTEs more efficiently.  At the moment, the packed variants of `Mul` and `Div`
+just run the code for a regular `Mul` or `Div` several times in a row.  Whilst this is theoretically still more efficient
+as the processor is already in AVX mode, I feel it could be better optimised.  AVX-512 would help, but only by allowing
+me to ram more 32-bit values into one operation.  And I'd have to borrow a server to test that.
