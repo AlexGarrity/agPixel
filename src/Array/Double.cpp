@@ -132,4 +132,54 @@ void dPixelArray::operator/=(const double v) {
 }
 
 
+PIXEL_API dPixelArray operator+(dPixelArray &a, dPixelArray &b) {
+        dPixelArray out = a;
+        out += b;
+        return out;
+}
+
+PIXEL_API dPixelArray operator-(dPixelArray &a, dPixelArray &b) {
+        dPixelArray out = a;
+        out -= b;
+        return out;
+}
+
+PIXEL_API dPixelArray operator*(dPixelArray &a, dPixelArray &b) {
+        dPixelArray out = a;
+        out *= b;
+        return out;
+}
+
+PIXEL_API dPixelArray operator/(dPixelArray &a, dPixelArray &b) {
+        dPixelArray out = a;
+        out /= b;
+        return out;
+}
+
+
+PIXEL_API dPixelArray operator+(dPixelArray &a, double b) {
+        dPixelArray out = a;
+        out += b;
+        return out;
+}
+
+PIXEL_API dPixelArray operator-(dPixelArray &a, double b) {
+        dPixelArray out = a;
+        out -= b;
+        return out;
+}
+
+PIXEL_API dPixelArray operator*(dPixelArray &a, double b) {
+        dPixelArray out = a;
+        out *= b;
+        return out;
+}
+
+PIXEL_API dPixelArray operator/(dPixelArray &a, double b) {
+        dPixelArray out = a;
+        out /= b;
+        return out;
+}
+
+
 }

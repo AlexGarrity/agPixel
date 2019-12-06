@@ -178,4 +178,54 @@ void PixelArray::operator/=(const uint8_t v) {
 }
 
 
+PIXEL_API PixelArray operator+(PixelArray &a, PixelArray &b) {
+        PixelArray out = a;
+        out += b;
+        return out;
+}
+
+PIXEL_API PixelArray operator-(PixelArray &a, PixelArray &b) {
+        PixelArray out = a;
+        out -= b;
+        return out;
+}
+
+PIXEL_API PixelArray operator*(PixelArray &a, PixelArray &b) {
+        PixelArray out = a;
+        out *= b;
+        return out;
+}
+
+PIXEL_API PixelArray operator/(PixelArray &a, PixelArray &b) {
+        PixelArray out = a;
+        out /= b;
+        return out;
+}
+
+
+PIXEL_API PixelArray operator+(PixelArray &a, double b) {
+        PixelArray out = a;
+        out += b;
+        return out;
+}
+
+PIXEL_API PixelArray operator-(PixelArray &a, double b) {
+        PixelArray out = a;
+        out -= b;
+        return out;
+}
+
+PIXEL_API PixelArray operator*(PixelArray &a, double b) {
+        PixelArray out = a;
+        out *= b;
+        return out;
+}
+
+PIXEL_API PixelArray operator/(PixelArray &a, double b) {
+        PixelArray out = a;
+        out /= b;
+        return out;
+}
+
+
 }

@@ -150,4 +150,54 @@ void fPixelArray::operator/=(const float v) {
 }
 
 
+PIXEL_API fPixelArray operator+(fPixelArray &a, fPixelArray &b) {
+        fPixelArray out = a;
+        out += b;
+        return out;
+}
+
+PIXEL_API fPixelArray operator-(fPixelArray &a, fPixelArray &b) {
+        fPixelArray out = a;
+        out -= b;
+        return out;
+}
+
+PIXEL_API fPixelArray operator*(fPixelArray &a, fPixelArray &b) {
+        fPixelArray out = a;
+        out *= b;
+        return out;
+}
+
+PIXEL_API fPixelArray operator/(fPixelArray &a, fPixelArray &b) {
+        fPixelArray out = a;
+        out /= b;
+        return out;
+}
+
+
+PIXEL_API fPixelArray operator+(fPixelArray &a, double b) {
+        fPixelArray out = a;
+        out += b;
+        return out;
+}
+
+PIXEL_API fPixelArray operator-(fPixelArray &a, double b) {
+        fPixelArray out = a;
+        out -= b;
+        return out;
+}
+
+PIXEL_API fPixelArray operator*(fPixelArray &a, double b) {
+        fPixelArray out = a;
+        out *= b;
+        return out;
+}
+
+PIXEL_API fPixelArray operator/(fPixelArray &a, double b) {
+        fPixelArray out = a;
+        out /= b;
+        return out;
+}
+
+
 }
