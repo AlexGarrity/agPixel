@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(libPixel VERSION 1.2.1 DESCRIPTION "Simple library for handling libPixels")
+project(libPixel VERSION 1.2.3 DESCRIPTION "Simple library for handling libPixels")
 include(GNUInstallDirs)
+set(CMAKE_CXX_STANDARD 14)
 
 message(STATUS "Using libPixel Version ${PROJECT_VERSION}")
 
@@ -20,59 +21,56 @@ else()
 endif()
 
 set(SOURCE
-    ${CMAKE_SOURCE_DIR}/src/PixelDouble.cpp
-    ${CMAKE_SOURCE_DIR}/src/PixelFloat.cpp
-    ${CMAKE_SOURCE_DIR}/src/PixelInt.cpp
-    ${CMAKE_SOURCE_DIR}/src/PixelMath.cpp
+    # Pixel sources
+    ${CMAKE_SOURCE_DIR}/src/Pixel/Double.cpp
+    ${CMAKE_SOURCE_DIR}/src/Pixel/Float.cpp
+    ${CMAKE_SOURCE_DIR}/src/Pixel/Int.cpp
+    # Pixel array sources
+    ${CMAKE_SOURCE_DIR}/src/Array/Double.cpp
+    ${CMAKE_SOURCE_DIR}/src/Array/Float.cpp
+    ${CMAKE_SOURCE_DIR}/src/Array/Int.cpp
+    # Math sources
+    ${CMAKE_SOURCE_DIR}/src/PackedMath.cpp
+    ${CMAKE_SOURCE_DIR}/src/Math.cpp
 )
 
 if(${ENABLE_EXTENSIONS})
 
-    message(STATUS "Vector extensions have been enabled")
+    message(NOTICE "Vector extensions have been enabled")
     # Check if we have either SSE2 or AVX2
-    set(HAS_AVX2 0)
-    set(HAS_SSE2 0)
+    set(HAS_AVX2 -1)
+    set(HAS_SSE2 -1)
 
     # AVX2 Check goes here
-    message(STATUS "Checking for AVX2 support")
-    try_compile(HAS_AVX2 ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/tests/AVXTest.cpp)
-    message(STATUS "AVX2 support returned ${HAS_AVX2}")
-    message(STATUS "Checking for SSE2 support")
-    try_compile(HAS_SSE2 ${CMAKE_BINARY_DIR} ${CMAKE_SOURCE_DIR}/tests/SSETest.cpp)
-    message(STATUS "SSE2 support returned ${HAS_SSE2}")
+    include(${CMAKE_SOURCE_DIR}/cmake/TestAVX2.cmake)
+    include(${CMAKE_SOURCE_DIR}/cmake/TestSSE2.cmake)
+    TestAVX2()
+    TestSSE2()
 
-    if ("${HAS_AVX2}" STREQUAL "TRUE")
-    message("CPU supports AVX2, enabling AVX2 maths")
+    if ("${HAS_AVX2}" STREQUAL "0")
+    message(NOTICE "CPU supports AVX2, enabling AVX2 maths")
         # Enable the AVX versions of PixelMath and PixelPackedMath
         set(MATH_SOURCE
-            ${CMAKE_SOURCE_DIR}/src/Math/PixelMathAVX.cpp
+            ${CMAKE_SOURCE_DIR}/src/Math/MathAVX.cpp
         )
         set(PACKED_MATH_SOURCE
-            ${CMAKE_SOURCE_DIR}/src/Math/PixelPackedMathAVX.cpp
+            ${CMAKE_SOURCE_DIR}/src/Math/PackedMathAVX.cpp
         )
         # Define the stuff we need to turn extensions on
         set(EXTRA_COMPILE_DEFS ${EXTRA_COMPILE_DEFS} "ENABLE_EXTENSIONS" "FOUND_AVX2")
-        if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-            set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} "/arch:AVX2")
-        else()
-            set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} "-mavx2")
-        endif()
-    elseif("${HAS_SSE2}" STREQUAL "TRUE")
-        message(STATUS "CPU supports SSE2, enabling SSE2 maths")
+        set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} ${AVX2_FLAG})
+    elseif("${HAS_SSE2}" STREQUAL "0")
+        message(NOTICE "CPU supports SSE2, enabling SSE2 maths")
         # Enable the AVX versions of PixelMath and PixelPackedMath
         set(MATH_SOURCE
-            ${CMAKE_SOURCE_DIR}/src/Math/PixelMathSSE.cpp
+            ${CMAKE_SOURCE_DIR}/src/Math/MathSSE.cpp
         )
         set(PACKED_MATH_SOURCE
-            ${CMAKE_SOURCE_DIR}/src/Math/PixelPackedMathSSE.cpp
+            ${CMAKE_SOURCE_DIR}/src/Math/PackedMathSSE.cpp
         )
         # Define the stuff we need to turn extensions on
         set(EXTRA_COMPILE_DEFS ${EXTRA_COMPILE_DEFS} "ENABLE_EXTENSIONS" "FOUND_SSE2")
-        if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-            set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} "/arch:SSE2")
-        else()
-            set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} "-msse2")
-        endif()
+        set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS} ${SSE2_FLAG})
     else()
         message(FATAL_ERROR "Extensions have been enabled but the CPU does not support them.  Please reconfigure the project.")
     endif()
@@ -80,12 +78,12 @@ if(${ENABLE_EXTENSIONS})
 
 else()
     # Enable the vanilla versions of PixelMath and PixelPackedMath
-    message(STATUS "Extensions not enabled, using vanilla maths")
+    message(NOTICE "Extensions not enabled, using vanilla maths")
     set(MATH_SOURCE
-        ${CMAKE_SOURCE_DIR}/src/Math/PixelMath.cpp
+        ${CMAKE_SOURCE_DIR}/src/Math/Math.cpp
     )
     set(PACKED_MATH_SOURCE
-        ${CMAKE_SOURCE_DIR}/src/Math/PixelPackedMath.cpp
+        ${CMAKE_SOURCE_DIR}/src/Math/PackedMath.cpp
     )
     set(EXTRA_COMPILE_DEFS ${EXTRA_COMPILE_DEFS})
     set(EXTRA_COMPILE_FLAGS ${EXTRA_COMPILE_FLAGS})

@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Core.hpp"
+
 // Double representations of pixels
 // Even more CPU intensive to use, but also even more accurate
 // Suited for applications such as really accurate ray tracing
-
-#include "PixelCore.hpp"
 
 namespace Pixel {
 

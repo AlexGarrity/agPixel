@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PixelCore.hpp"
+#include "Core.hpp"
 
 // Floating point representations of pixels
 // More CPU intensive to use, but also more accurate

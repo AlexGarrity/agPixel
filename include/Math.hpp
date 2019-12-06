@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-#include "PixelCore.hpp"
+#include "Core.hpp"
 
 namespace Pixel {
 
@@ -24,6 +24,17 @@ namespace Pixel {
 #define DOUBLEQUAD                                                             \
   const double a1, const double a2, const double b1, const double b2,          \
       const double c1, const double c2, const double d1, const double d2
+
+
+// Save lots more space
+#define BQUADPAIR                                                             \
+  const BQuad qA, const BQuad qB
+#define FQUADPAIR                                                             \
+  const FQuad qA, const FQuad qB
+#define DQUADPAIR                                                             \
+  const DQuad qA, const DQuad qB
+
+
 
 // Just a little something so I don't have to use pointer arrays
 template <typename T> struct Quad {
@@ -49,12 +60,21 @@ template <typename T> struct Quad {
     values[2] = v[2];
     values[3] = v[3];
   }
+
+  Quad(const T v) {
+    values[0] = v;
+    values[1] = v;
+    values[2] = v;
+    values[3] = v;
+  }
+
 };
 
 // I don't like templating everything I use
 using BQuad = Quad<BYTE>;
 using FQuad = Quad<float>;
 using DQuad = Quad<double>;
+
 
 // Declarations of maths functions
 DQuad Add(DOUBLEQUAD);
@@ -72,5 +92,22 @@ BQuad Sub(BYTEQUAD);
 DQuad Div(DOUBLEQUAD);
 FQuad Div(FLOATQUAD);
 BQuad Div(BYTEQUAD);
+
+
+DQuad Add(DQUADPAIR);
+FQuad Add(FQUADPAIR);
+BQuad Add(BQUADPAIR);
+
+DQuad Mul(DQUADPAIR);
+FQuad Mul(FQUADPAIR);
+BQuad Mul(BQUADPAIR);
+
+DQuad Sub(DQUADPAIR);
+FQuad Sub(FQUADPAIR);
+BQuad Sub(BQUADPAIR);
+
+DQuad Div(DQUADPAIR);
+FQuad Div(FQUADPAIR);
+BQuad Div(BQUADPAIR);
 
 } // namespace Pixel

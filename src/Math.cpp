@@ -1,12 +1,12 @@
-#include "PixelMath.hpp"
+#include "Math.hpp"
 
 #if defined(FOUND_AVX2)
 // AVX is best, hopefully we can use it
-#include "Math/PixelMathAVX.hpp"
+#include "Math/MathAVX.hpp"
 #elif defined(FOUND_SSE2)
 // If not, SSE2 will do
-#include "Math/PixelMathSSE.hpp"
+#include "Math/MathSSE.hpp"
 #else
 // Guess we're out of luck
-#include "Math/PixelMath.hpp"
+#include "Math/Math.hpp"
 #endif

@@ -1,7 +1,7 @@
-#include "Math/PixelMathAVX.hpp"
+#include "Math/MathAVX.hpp"
 
-#include "PixelCore.hpp"
-#include "PixelMath.hpp"
+#include "Core.hpp"
+#include "Math.hpp"
 
 // Extensions are enabled, so use AVX2 rather than regular maths
 namespace Pixel {
@@ -117,6 +117,94 @@ FQuad Div(FLOATQUAD) {
 DQuad Div(DOUBLEQUAD) {
   __m256d a{a1, b1, c1, d1};
   __m256d b{a2, b2, c2, d2};
+  auto result = _mm256_div_pd(a, b);
+  return UnpackDouble(result);
+}
+
+
+
+BQuad Add(BQUADPAIR) {
+  __m256i a{qA[0], qA[1], qA[2], qA[3]};
+  __m256i b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm256_adds_epu8(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Add(FQUADPAIR) {
+  __m256 a{qA[0], qA[1], qA[2], qA[3]};
+  __m256 b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm256_add_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Add(DQUADPAIR) {
+  __m256d a{qA[0], qA[1], qA[2], qA[3]};
+  __m256d b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm256_add_pd(a, b);
+  return UnpackDouble(result);
+}
+
+BQuad Mul(BQUADPAIR) {
+  __m256i a{qA[0], qA[1], qA[2], qA[3]};
+  __m256i b{qA[0], qA[1], qA[2], qA[3]};
+  auto result = _mm256_mul_epu32(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Mul(FQUADPAIR) {
+  __m256 a{qA[0], qA[1], qA[2], qA[3]};
+  __m256 b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm256_mul_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Mul(DQUADPAIR) {
+  __m256d a{qA[0], qA[1], qA[2], qA[3]};
+  __m256d b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm256_mul_pd(a, b);
+  return UnpackDouble(result);
+}
+
+BQuad Sub(BQUADPAIR) {
+  __m256i a{qA[0], qA[1], qA[2], qA[3]};
+  __m256i b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm256_sub_epi16(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Sub(FQUADPAIR) {
+  __m256 a{qA[0], qA[1], qA[2], qA[3]};
+  __m256 b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm256_sub_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Sub(DQUADPAIR) {
+  __m256d a{qA[0], qA[1], qA[2], qA[3]};
+  __m256d b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm256_sub_pd(a, b);
+  return UnpackDouble(result);
+}
+
+BQuad Div(BQUADPAIR) {
+  __m256 a{static_cast<float>(qA[0]), static_cast<float>(qA[1]),
+           static_cast<float>(qA[2]), static_cast<float>(qA[3])};
+  __m256 b{static_cast<float>(qB[0]), static_cast<float>(qB[1]),
+           static_cast<float>(qB[2]), static_cast<float>(qB[3])};
+  auto result = _mm256_div_ps(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Div(FQUADPAIR) {
+  __m256 a{qA[0], qA[1], qA[2], qA[3]};
+  __m256 b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm256_div_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Div(DQUADPAIR) {
+  __m256d a{qA[0], qA[1], qA[2], qA[3]};
+  __m256d b{qB[0], qB[1], qB[2], qB[3]};
   auto result = _mm256_div_pd(a, b);
   return UnpackDouble(result);
 }

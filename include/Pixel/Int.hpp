@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PixelCore.hpp"
+#include "Core.hpp"
 #include <cstdint>
 
 // Traditional integer representations of pixels

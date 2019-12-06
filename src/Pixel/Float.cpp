@@ -1,5 +1,5 @@
-#include "PixelFloat.hpp"
-#include "PixelMath.hpp"
+#include "Pixel/Float.hpp"
+#include "Math.hpp"
 
 namespace Pixel {
 

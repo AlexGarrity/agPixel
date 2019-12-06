@@ -1,5 +1,5 @@
-#include "PixelInt.hpp"
-#include "PixelMath.hpp"
+#include "Pixel/Int.hpp"
+#include "Math.hpp"
 
 namespace Pixel {
 

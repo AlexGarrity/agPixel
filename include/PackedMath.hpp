@@ -1,7 +1,7 @@
 #pragma once
 
-#include "PixelCore.hpp"
-#include "PixelMath.hpp"
+#include "Core.hpp"
+#include "Math.hpp"
 
 namespace Pixel {
 

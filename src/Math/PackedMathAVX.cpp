@@ -1,8 +1,8 @@
-#include "Math/PixelPackedMathAVX.hpp"
+#include "Math/PackedMathAVX.hpp"
 
-#include "PixelCore.hpp"
-#include "PixelMath.hpp"
-#include "PixelPackedMath.hpp"
+#include "Core.hpp"
+#include "Math.hpp"
+#include "PackedMath.hpp"
 
 namespace Pixel {
 

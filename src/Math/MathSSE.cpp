@@ -1,7 +1,7 @@
-#include "Math/PixelMathSSE.hpp"
+#include "Math/MathSSE.hpp"
 
-#include "PixelCore.hpp"
-#include "PixelMath.hpp"
+#include "Core.hpp"
+#include "Math.hpp"
 
 // Extensions are enabled, so use AVX2 rather than regular maths
 namespace Pixel {
@@ -140,6 +140,107 @@ DQuad Div(DOUBLEQUAD) {
   __m128d ay{c1, d1};
   __m128d bx{a2, b2};
   __m128d by{c2, d2};
+  auto r1 = _mm_div_pd(ax, bx);
+  auto r2 = _mm_div_pd(ay, by);
+  return UnpackDouble(r1, r2);
+}
+
+
+
+BQuad Add(BQUADPAIR) {
+  __m128i a = PackBQuad(BQuad(qA[0], qA[1], qA[2], qA[3]));
+  __m128i b = PackBQuad(BQuad(qB[0], qB[1], qB[2], qB[3]));
+  auto result = _mm_adds_epu8(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Add(FQUADPAIR) {
+  __m128 a{qA[0], qA[1], qA[2], qA[3]};
+  __m128 b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm_add_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Add(DQUADPAIR) {
+  __m128d ax{qA[0], qA[1]};
+  __m128d ay{qA[2], qA[3]};
+  __m128d bx{qB[0], qB[1]};
+  __m128d by{qB[2], qB[3]};
+  auto r1 = _mm_add_pd(ax, bx);
+  auto r2 = _mm_add_pd(ay, by);
+  return UnpackDouble(r1, r2);
+}
+
+BQuad Mul(BQUADPAIR) {
+  __m128i a = PackBQuad(BQuad(qA[0], qA[1], qA[2], qA[3]));
+  __m128i b = PackBQuad(BQuad(qB[0], qB[1], qB[2], qB[3]));
+  auto result = _mm_mul_epu32(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Mul(FQUADPAIR) {
+  __m128 a{qA[0], qA[1], qA[2], qA[3]};
+  __m128 b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm_mul_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Mul(DQUADPAIR) {
+  __m128d ax{qA[0], qA[1]};
+  __m128d ay{qA[2], qA[3]};
+  __m128d bx{qB[0], qB[1]};
+  __m128d by{qB[2], qB[3]};
+  auto r1 = _mm_mul_pd(ax, bx);
+  auto r2 = _mm_mul_pd(ay, by);
+  return UnpackDouble(r1, r2);
+}
+
+BQuad Sub(BQUADPAIR) {
+  __m128i a = PackBQuad(BQuad(qA[0], qA[1], qA[2], qA[3]));
+  __m128i b = PackBQuad(BQuad(qB[0], qB[1], qB[2], qB[3]));
+  auto result = _mm_sub_epi16(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Sub(FQUADPAIR) {
+  __m128 a{qA[0], qA[1], qA[2], qA[3]};
+  __m128 b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm_sub_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Sub(DQUADPAIR) {
+  __m128d ax{qA[0], qA[1]};
+  __m128d ay{qA[2], qA[3]};
+  __m128d bx{qB[0], qB[1]};
+  __m128d by{qB[2], qB[3]};
+  auto r1 = _mm_sub_pd(ax, bx);
+  auto r2 = _mm_sub_pd(ay, by);
+  return UnpackDouble(r1, r2);
+}
+
+BQuad Div(BQUADPAIR) {
+  // This has to be done as floats, as integer division is unsupported
+  __m128 a{static_cast<float>(qA[0]), static_cast<float>(qA[1]),
+           static_cast<float>(qA[2]), static_cast<float>(qA[3])};
+  __m128 b{static_cast<float>(qB[0]), static_cast<float>(qB[1]),
+           static_cast<float>(qB[2]), static_cast<float>(qB[3])};
+  auto result = _mm_div_ps(a, b);
+  return UnpackChar(result);
+}
+
+FQuad Div(FQUADPAIR) {
+  __m128 a{qA[0], qA[1], qA[2], qA[3]};
+  __m128 b{qB[0], qB[1], qB[2], qB[3]};
+  auto result = _mm_div_ps(a, b);
+  return UnpackFloat(result);
+}
+
+DQuad Div(DQUADPAIR) {
+  __m128d ax{qA[0], qA[1]};
+  __m128d ay{qA[2], qA[3]};
+  __m128d bx{qB[0], qB[1]};
+  __m128d by{qB[2], qB[3]};
   auto r1 = _mm_div_pd(ax, bx);
   auto r2 = _mm_div_pd(ay, by);
   return UnpackDouble(r1, r2);
