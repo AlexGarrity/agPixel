@@ -1,6 +1,5 @@
-# libPixel
-Lightweight library which provides char, float, and double representation of pixels, for use in
-all kinds of applications from image libraries to raytracing.  
+# agPixel
+Lightweight library which provides char, float, and double representation of pixels, for use in all kinds of applications from image libraries to raytracing.  
 
 ## Building
 Building should be pretty simple, you can just run this:
