@@ -3,6 +3,7 @@
 #include "Core.hpp"
 #include "Math.hpp"
 
+namespace ag {
 namespace Pixel {
 
 // No extensions so we'll use regular functions...
@@ -99,3 +100,4 @@ FQuad Div(FQUADPAIR) { return Div<float>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2
 DQuad Div(DQUADPAIR) { return Div<double>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
 
 } // namespace Pixel
+} // namespace ag

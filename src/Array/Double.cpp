@@ -2,6 +2,7 @@
 
 #include <functional>
 
+namespace ag {
 namespace Pixel {
 
 dPixelArray::dPixelArray(uint32_t width, uint32_t height) {
@@ -182,4 +183,5 @@ PIXEL_API dPixelArray operator/(dPixelArray &a, double b) {
 }
 
 
+}
 }

@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstdint>
 
+namespace ag {
 namespace Pixel {
 
 class fPixelArray {
@@ -40,4 +41,5 @@ class fPixelArray {
         uint32_t m_height;
 };
 
+}
 }

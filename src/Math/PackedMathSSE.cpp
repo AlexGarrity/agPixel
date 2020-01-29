@@ -5,6 +5,7 @@
 #include "PackedMath.hpp"
 #include <emmintrin.h>
 
+namespace ag {
 namespace Pixel {
 
 /*
@@ -187,3 +188,4 @@ FQuad2 Div(FQuad2 a, FQuad2 b) {
 }
 
 } // namespace Pixel
+}

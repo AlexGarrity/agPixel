@@ -4,6 +4,7 @@
 #include "Math.hpp"
 
 // Extensions are enabled, so use AVX2 rather than regular maths
+namespace ag {
 namespace Pixel {
 
 // Some handy little helper functions for unpacking __mm256 types
@@ -210,3 +211,4 @@ DQuad Div(DQUADPAIR) {
 }
 
 } // namespace Pixel
+}

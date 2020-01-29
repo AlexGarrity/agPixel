@@ -1,6 +1,7 @@
 #include "Pixel/Int.hpp"
 #include "Math.hpp"
 
+namespace ag {
 namespace Pixel {
 
 // RGB functions
@@ -196,3 +197,4 @@ PIXEL_API inline RGBA operator/(const RGBA &rgba, const uint8_t value) {
 }
 
 } // namespace Pixel
+}

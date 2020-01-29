@@ -6,6 +6,7 @@
 // Even more CPU intensive to use, but also even more accurate
 // Suited for applications such as really accurate ray tracing
 
+namespace ag {
 namespace Pixel {
 
 // dRGB is the simplest way to represent a pixel, using only red, green, and
@@ -67,4 +68,5 @@ public:
   void operator/=(double value) override;
 };
 
-}; // namespace Pixel
+} // namespace Pixel
+}

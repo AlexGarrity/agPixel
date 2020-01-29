@@ -6,6 +6,7 @@
 // More CPU intensive to use, but also more accurate
 // Suited for applications such as ray tracing
 
+namespace ag {
 namespace Pixel {
 
 // fRGB is the simplest way to represent a pixel, using only red, green, and
@@ -68,3 +69,4 @@ public:
 };
 
 }; // namespace Pixel
+}

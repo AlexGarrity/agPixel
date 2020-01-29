@@ -3,6 +3,7 @@
 #include "Core.hpp"
 #include "Math.hpp"
 
+namespace ag {
 namespace Pixel {
 
 struct BQuad2 {
@@ -110,3 +111,4 @@ FQuad2 Sub(FQuad2 a, FQuad2 b);
 FQuad2 Div(FQuad2 a, FQuad2 b);
 
 } // namespace Pixel
+}

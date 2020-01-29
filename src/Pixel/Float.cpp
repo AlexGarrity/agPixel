@@ -1,6 +1,7 @@
 #include "Pixel/Float.hpp"
 #include "Math.hpp"
 
+namespace ag {
 namespace Pixel {
 
 // fRGB functions
@@ -190,3 +191,4 @@ PIXEL_API inline fRGBA operator/(const fRGBA &rgba, const float value) {
 }
 
 } // namespace Pixel
+}

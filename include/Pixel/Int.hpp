@@ -7,6 +7,7 @@
 // Designed to be highly efficient and use as little space as possible
 // Also very cheap to work with
 
+namespace ag {
 namespace Pixel {
 
 // RGB is the simplest way to represent a pixel, using only red, green, and blue
@@ -63,3 +64,4 @@ public:
 };
 
 }; // namespace Pixel
+}

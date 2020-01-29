@@ -7,6 +7,7 @@
 
 #include "Core.hpp"
 
+namespace ag {
 namespace Pixel {
 
 // Save some space
@@ -112,3 +113,4 @@ FQuad Div(FQUADPAIR);
 BQuad Div(BQUADPAIR);
 
 } // namespace Pixel
+}

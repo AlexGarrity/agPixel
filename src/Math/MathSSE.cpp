@@ -247,3 +247,4 @@ DQuad Div(DQUADPAIR) {
 }
 
 } // namespace Pixel
+}

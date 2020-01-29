@@ -1,6 +1,7 @@
 #include "Pixel/Double.hpp"
 #include "Math.hpp"
 
+namespace ag {
 namespace Pixel {
 
 // dRGB functions
@@ -190,3 +191,4 @@ PIXEL_API inline dRGBA operator/(const dRGBA &rgba, const double value) {
 }
 
 } // namespace Pixel
+}

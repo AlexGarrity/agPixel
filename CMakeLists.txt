@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(agPixel VERSION 1.2.4 DESCRIPTION "Simple library for handling Pixels")
+project(agPixel VERSION 1.2.5 DESCRIPTION "Simple library for handling Pixels")
 include(GNUInstallDirs)
 set(CMAKE_CXX_STANDARD 17)
 

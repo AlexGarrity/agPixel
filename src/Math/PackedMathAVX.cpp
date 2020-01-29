@@ -4,6 +4,7 @@
 #include "Math.hpp"
 #include "PackedMath.hpp"
 
+namespace ag {
 namespace Pixel {
 
 /*
@@ -209,3 +210,4 @@ FQuad2 Div(FQuad2 a, FQuad2 b) {
 }
 
 } // namespace Pixel
+}
