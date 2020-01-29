@@ -73,31 +73,53 @@ FQuad Div(FLOATQUAD) { return Div<float>(a1, a2, b1, b2, c1, c2, d1, d2); }
 
 DQuad Div(DOUBLEQUAD) { return Div<double>(a1, a2, b1, b2, c1, c2, d1, d2); }
 
+BQuad Add(BQUADPAIR) {
+  return Add<BYTE>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
+FQuad Add(FQUADPAIR) {
+  return Add<float>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-BQuad Add(BQUADPAIR) { return Add<BYTE>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+DQuad Add(DQUADPAIR) {
+  return Add<double>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-FQuad Add(FQUADPAIR) { return Add<float>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+BQuad Mul(BQUADPAIR) {
+  return Mul<BYTE>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-DQuad Add(DQUADPAIR) { return Add<double>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+FQuad Mul(FQUADPAIR) {
+  return Mul<float>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-BQuad Mul(BQUADPAIR) { return Mul<BYTE>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+DQuad Mul(DQUADPAIR) {
+  return Mul<double>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-FQuad Mul(FQUADPAIR) { return Mul<float>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+BQuad Sub(BQUADPAIR) {
+  return Sub<BYTE>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-DQuad Mul(DQUADPAIR) { return Mul<double>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+FQuad Sub(FQUADPAIR) {
+  return Sub<float>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-BQuad Sub(BQUADPAIR) { return Sub<BYTE>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+DQuad Sub(DQUADPAIR) {
+  return Sub<double>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-FQuad Sub(FQUADPAIR) { return Sub<float>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+BQuad Div(BQUADPAIR) {
+  return Div<BYTE>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-DQuad Sub(DQUADPAIR) { return Sub<double>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+FQuad Div(FQUADPAIR) {
+  return Div<float>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
-BQuad Div(BQUADPAIR) { return Div<BYTE>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
-
-FQuad Div(FQUADPAIR) { return Div<float>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
-
-DQuad Div(DQUADPAIR) { return Div<double>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]); }
+DQuad Div(DQUADPAIR) {
+  return Div<double>(qA[0], qB[0], qA[1], qB[1], qA[2], qB[2], qA[3], qB[3]);
+}
 
 } // namespace Pixel
 } // namespace ag

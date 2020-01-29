@@ -20,9 +20,9 @@
 
 #if defined(ENABLE_EXTENSIONS)
 #if defined(FOUND_AVX2)
-    #include <immintrin.h>
+#include <immintrin.h>
 #elif defined(FOUND_SSE2)
-    #include <immintrin.h>
+#include <immintrin.h>
 #else
 // No extension support, so we can't use extensions
 #error                                                                         \

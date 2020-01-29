@@ -30,7 +30,9 @@ inline WORD BQuadToWord(BQuad v) {
   return (W(v[0]) | W(v[1]) << 8 | W(v[2]) << 16 | W(v[3]) << 24);
 }
 
-inline BQuad WordToBQuad(WORD v) { return {B(v), B(v >> 8), B(v >> 16), B(v >> 24)}; }
+inline BQuad WordToBQuad(WORD v) {
+  return {B(v), B(v >> 8), B(v >> 16), B(v >> 24)};
+}
 
 inline DWORD BQuad2ToDword(BQuad2 v) {
   return (DWORD(v.a[0]) | DWORD(v.a[1]) << 8 | DWORD(v.a[2]) << 16 |
@@ -38,7 +40,9 @@ inline DWORD BQuad2ToDword(BQuad2 v) {
           DWORD(v.a[2]) << 48 | DWORD(v.a[3]) << 56);
 }
 
-inline BQuad2 DwordToBQuad2(DWORD v) { return {WordToBQuad(v), WordToBQuad(v << 32)}; }
+inline BQuad2 DwordToBQuad2(DWORD v) {
+  return {WordToBQuad(v), WordToBQuad(v << 32)};
+}
 
 inline BQuad4 M256ToBQuad4(__m256i v) {
   return {WordToBQuad(v[0]), WordToBQuad(v[1]), WordToBQuad(v[2]),
@@ -60,11 +64,13 @@ inline SQuad DwordToSQuad(DWORD v) {
 
 // Helper functions to translate BQuad8s and SQuad4s
 inline SQuad4 BQuad8UpperToSQuad4(BQuad8 x) {
-  return { BQuadToSQuad(x.a), BQuadToSQuad(x.b), BQuadToSQuad(x.c), BQuadToSQuad(x.d) };
+  return {BQuadToSQuad(x.a), BQuadToSQuad(x.b), BQuadToSQuad(x.c),
+          BQuadToSQuad(x.d)};
 }
 
 inline SQuad4 BQuad8LowerToSQuad4(BQuad8 x) {
-  return { BQuadToSQuad(x.e), BQuadToSQuad(x.f), BQuadToSQuad(x.g), BQuadToSQuad(x.h) };
+  return {BQuadToSQuad(x.e), BQuadToSQuad(x.f), BQuadToSQuad(x.g),
+          BQuadToSQuad(x.h)};
 }
 
 inline __m256i BQuad4ToM256(BQuad4 v) {
@@ -75,35 +81,22 @@ inline __m256i BQuad4ToM256(BQuad4 v) {
 // Super hacky and I hate it, but it works
 inline __m256i BQuad8ToM256(BQuad8 v) {
   return {
-    iD(BQuad2ToDword(BQuad2(v.a, v.b))),
-    iD(BQuad2ToDword(BQuad2(v.c, v.d))),
-    iD(BQuad2ToDword(BQuad2(v.e, v.f))),
-    iD(BQuad2ToDword(BQuad2(v.g, v.h)))
-  };
+      iD(BQuad2ToDword(BQuad2(v.a, v.b))), iD(BQuad2ToDword(BQuad2(v.c, v.d))),
+      iD(BQuad2ToDword(BQuad2(v.e, v.f))), iD(BQuad2ToDword(BQuad2(v.g, v.h)))};
 }
 
 inline __m256i SQuad4ToM256(SQuad4 v) {
-  return {
-    iD(SQuadToDword(v.a)),
-    iD(SQuadToDword(v.b)),
-    iD(SQuadToDword(v.c)),
-    iD(SQuadToDword(v.d))
-  };
+  return {iD(SQuadToDword(v.a)), iD(SQuadToDword(v.b)), iD(SQuadToDword(v.c)),
+          iD(SQuadToDword(v.d))};
 }
 
 inline SQuad4 M256ToSQuad4(__m256i v) {
-  return SQuad4 {
-    DwordToSQuad(v[0]),
-    DwordToSQuad(v[1]),
-    DwordToSQuad(v[2]),
-    DwordToSQuad(v[3])
-  };
+  return SQuad4{DwordToSQuad(v[0]), DwordToSQuad(v[1]), DwordToSQuad(v[2]),
+                DwordToSQuad(v[3])};
 }
 
 inline __m256 FQuad2ToM256(FQuad2 v) {
-  return {
-      v.a[0], v.a[1], v.a[2], v.a[3], v.b[0], v.b[1], v.b[2], v.b[3]
-  };
+  return {v.a[0], v.a[1], v.a[2], v.a[3], v.b[0], v.b[1], v.b[2], v.b[3]};
 }
 
 FQuad2 M256ToFQuad2(__m256 v) {
@@ -131,8 +124,10 @@ BQuad4 Sub(BQuad4 a, BQuad4 b) {
 }
 
 BQuad4 Mul(BQuad4 a, BQuad4 b) {
-  auto sq1 = SQuad4(BQuadToSQuad(a.a), BQuadToSQuad(a.b), BQuadToSQuad(a.c), BQuadToSQuad(a.d));
-  auto sq2 = SQuad4(BQuadToSQuad(b.a), BQuadToSQuad(b.b), BQuadToSQuad(b.c), BQuadToSQuad(b.d));
+  auto sq1 = SQuad4(BQuadToSQuad(a.a), BQuadToSQuad(a.b), BQuadToSQuad(a.c),
+                    BQuadToSQuad(a.d));
+  auto sq2 = SQuad4(BQuadToSQuad(b.a), BQuadToSQuad(b.b), BQuadToSQuad(b.c),
+                    BQuadToSQuad(b.d));
 
   auto m1 = SQuad4ToM256(sq1);
   auto m2 = SQuad4ToM256(sq2);
@@ -210,4 +205,4 @@ FQuad2 Div(FQuad2 a, FQuad2 b) {
 }
 
 } // namespace Pixel
-}
+} // namespace ag

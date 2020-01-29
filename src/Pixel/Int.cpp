@@ -197,4 +197,4 @@ PIXEL_API inline RGBA operator/(const RGBA &rgba, const uint8_t value) {
 }
 
 } // namespace Pixel
-}
+} // namespace ag

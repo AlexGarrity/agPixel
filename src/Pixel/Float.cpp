@@ -191,4 +191,4 @@ PIXEL_API inline fRGBA operator/(const fRGBA &rgba, const float value) {
 }
 
 } // namespace Pixel
-}
+} // namespace ag

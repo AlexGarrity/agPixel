@@ -148,4 +148,4 @@ FQuad2 Div(FQuad2 a, FQuad2 b) {
 }
 
 } // namespace Pixel
-}
+} // namespace ag

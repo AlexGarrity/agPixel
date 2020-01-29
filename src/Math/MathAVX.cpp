@@ -122,8 +122,6 @@ DQuad Div(DOUBLEQUAD) {
   return UnpackDouble(result);
 }
 
-
-
 BQuad Add(BQUADPAIR) {
   __m256i a{qA[0], qA[1], qA[2], qA[3]};
   __m256i b{qB[0], qB[1], qB[2], qB[3]};
@@ -211,4 +209,4 @@ DQuad Div(DQUADPAIR) {
 }
 
 } // namespace Pixel
-}
+} // namespace ag

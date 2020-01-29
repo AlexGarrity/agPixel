@@ -145,8 +145,6 @@ DQuad Div(DOUBLEQUAD) {
   return UnpackDouble(r1, r2);
 }
 
-
-
 BQuad Add(BQUADPAIR) {
   __m128i a = PackBQuad(BQuad(qA[0], qA[1], qA[2], qA[3]));
   __m128i b = PackBQuad(BQuad(qB[0], qB[1], qB[2], qB[3]));

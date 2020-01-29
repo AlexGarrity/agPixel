@@ -191,4 +191,4 @@ PIXEL_API inline dRGBA operator/(const dRGBA &rgba, const double value) {
 }
 
 } // namespace Pixel
-}
+} // namespace ag
