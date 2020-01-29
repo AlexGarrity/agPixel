@@ -72,6 +72,7 @@ template <typename T> struct Quad {
 
 // I don't like templating everything I use
 using BQuad = Quad<BYTE>;
+using SQuad = Quad<int16_t>;
 using FQuad = Quad<float>;
 using DQuad = Quad<double>;
 

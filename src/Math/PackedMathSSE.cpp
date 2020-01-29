@@ -102,15 +102,20 @@ BQuad8 Sub(BQuad8 a, BQuad8 b) {
 }
 
 BQuad8 Mul(BQuad8 a, BQuad8 b) {
-  auto r1 = Mul(a.a[0], a.a[1], a.a[2], a.a[3], b.a[0], b.a[1], b.a[2], b.a[3]);
-  auto r2 = Mul(a.b[0], a.b[1], a.b[2], a.b[3], b.b[0], b.b[1], b.b[2], b.b[3]);
-  auto r3 = Mul(a.c[0], a.c[1], a.c[2], a.c[3], b.c[0], b.c[1], b.c[2], b.c[3]);
-  auto r4 = Mul(a.d[0], a.d[1], a.d[2], a.d[3], b.d[0], b.d[1], b.d[2], b.d[3]);
-  auto r5 = Mul(a.e[0], a.e[1], a.e[2], a.e[3], b.e[0], b.e[1], b.e[2], b.e[3]);
-  auto r6 = Mul(a.f[0], a.f[1], a.f[2], a.f[3], b.f[0], b.f[1], b.f[2], b.f[3]);
-  auto r7 = Mul(a.g[0], a.g[1], a.g[2], a.g[3], b.g[0], b.g[1], b.g[2], b.g[3]);
-  auto r8 = Mul(a.h[0], a.h[1], a.h[2], a.h[3], b.h[0], b.h[1], b.h[2], b.h[3]);
-  return {r1, r2, r4, r4, r5, r6, r7, r8};
+  auto sq1 = BQuad8LowerToSQuad4(a);
+  auto sq2 = BQuad8UpperToSQuad4(a);
+  auto sq3 = BQuad8LowerToSQuad4(b);
+  auto sq4 = BQuad8UpperToSQuad4(b);
+
+  auto m1 = SQuad4ToM256(sq1);
+  auto m2 = SQuad4ToM256(sq2);
+  auto m3 = SQuad4ToM256(sq3);
+  auto m4 = SQuad4ToM256(sq4);
+
+  auto r1 = _mm256_mullo_epi16(m1, m3);
+  auto r2 = _mm256_mullo_epi16(m2, m4);
+
+  return {M256ToSQuad4(r1), M256ToSQuad4(r2)};
 }
 
 BQuad8 Div(BQuad8 a, BQuad8 b) {
