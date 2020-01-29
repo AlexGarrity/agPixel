@@ -13,11 +13,23 @@ struct BQuad2 {
 };
 
 // SQuad4 contains 4 SQuads, thereby containing 32 bytes or 8 RBGA pixels
+// This fills an __m128i
+struct SQuad2 {
+  SQuad a, b;
+
+  SQuad2() = default;
+  SQuad2(SQuad a, SQuad b)
+    : a{a}, b{b} {}
+};
+
+// SQuad4 contains 4 SQuads, thereby containing 32 bytes or 8 RBGA pixels
 // This fills an __m256i
 struct SQuad4 {
   SQuad a, b, c, d;
 
   SQuad4() = default;
+  SQuad4(SQuad2 a, SQuad2 b)
+  : a{a.a}, b{a.b}, c{b.a}, d{b.b} {}
   SQuad4(SQuad a, SQuad b, SQuad c, SQuad d)
     : a{a}, b{b}, c{c}, d{d} {}
 };
