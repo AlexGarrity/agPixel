@@ -1,4 +1,6 @@
 # agPixel
+***Note - this library is currently undergoing some changes and will be separated into two components in the near future.  agPixel will remain for image manipulation, but a new library (likely agSIMD) will be absorbing the maths functions.
+
 Lightweight library which provides char, float, and double representation of pixels, for use in all kinds of applications from image libraries to raytracing.  
 It also provides a set of math functions for operating on pixels, including packed maths with optional vector extension support.  
 
@@ -35,8 +37,6 @@ Using this, you can expect a bit of a speed up, dependent on which extension set
 
 
 ## Future Additions
-*I think at this point I definitely need to separate the Pixel and Vector Extension components of this project because it's getting difficult to maintain them both as one project.  Separating them would allow for me to clean up the maths API, and force me to refactor some of the pixel code to take advantage of more efficient functions.*
-
 I'd like to be able to divide `BYTE` values more efficiently in the case of packed maths, but processors simply don't have the instructions to do this using intrinsics (or, at least, they're not exposed [probably because it's useless]).
 
 I'm half tempted to implement AVX-512 because I've found a server I can use to test it, but I think it's likely a waste of time since nobody using AVX-512 seriously is going to use this library...
