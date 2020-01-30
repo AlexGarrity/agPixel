@@ -1,5 +1,5 @@
 # agPixel
-***Note - this library is currently undergoing some changes and will be separated into two components in the near future.  agPixel will remain for image manipulation, but a new library (likely agSIMD) will be absorbing the maths functions.
+***Note - this library is currently undergoing some changes and will be separated into two components in the near future.  agPixel will remain for image manipulation, but a new library (likely agSIMD) will be absorbing the maths functions.***
 
 Lightweight library which provides char, float, and double representation of pixels, for use in all kinds of applications from image libraries to raytracing.  
 It also provides a set of math functions for operating on pixels, including packed maths with optional vector extension support.  
