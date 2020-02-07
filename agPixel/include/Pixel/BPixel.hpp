@@ -5,7 +5,7 @@
 namespace ag {
 namespace Pixel {
 
-class bRGBA : public PixelRGBA<uint8_t> {
+class AG_API bRGBA : public PixelRGBA<uint8_t> {
     public:
         bRGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
         : PixelRGBA<uint8_t> (r,g,b,a) {}

@@ -5,7 +5,7 @@
 namespace ag {
 namespace Pixel {
 
-class fRGBA : public PixelRGBA<float> {
+class AG_API fRGBA : public PixelRGBA<float> {
     public:
         fRGBA(float r, float g, float b, float a)
         : PixelRGBA<float> (r,g,b,a) {}

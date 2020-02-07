@@ -5,6 +5,8 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Pixel/DPixel.cpp
 )
 
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/Core.hpp.in" "${CMAKE_CURRENT_SOURCE_DIR}/include/Core.hpp")
+
 add_library(
     Pixel ${LIBRARY_KEYWORD} ${SOURCE}
 )

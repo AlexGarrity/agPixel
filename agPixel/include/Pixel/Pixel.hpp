@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core.hpp"
+
 #include <agSIMD/Quad.hpp>
 #include <agSIMD/Math.hpp>
 
